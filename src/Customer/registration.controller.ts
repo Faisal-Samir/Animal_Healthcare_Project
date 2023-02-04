@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from "@nestjs/common";
-import { Get, Param } from "@nestjs/common/decorators";
+import { Delete, Get, Param, Put } from "@nestjs/common/decorators";
 import { CustomerRegistration } from "./customer";
 
 
@@ -18,7 +18,22 @@ export class CustomerRegistrationController{
     }
 
     @Get(":id")
-    getUser(@Param("id") id : number){
-        return Customers.find(user => user.id == +id);
+    findUserById(@Param("id") id: number) {
+      let user = Customers.find((user => +user.id === +id));
+      if (user != -1) {
+        // return { message: "User found" };
+        return user;
+      }
+
+    // return user;
+  }
+    @Put(":id")
+    updateUser(@Param("id") id: number, @Body() updateUser: CustomerRegistration) {
+      let userIndex = Customers.findIndex((user => +user.id === +id));
+      if (userIndex == -1) {
+        return { message: "User not found" };
+      }
+      Customers[userIndex] = updateUser;
+      return { message: "User updated" };
     }
 }
