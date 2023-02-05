@@ -8,7 +8,7 @@ import { CustomerAppointment } from "./appointment";
 let Customers = [];
 let Appointments = [];
 @Controller("/users")
-export class CustomerRegistrationController{
+export class CustomerController{
     @Post()
     getRegister(@Body() register : CustomerRegistration ){
         Customers.push(register);

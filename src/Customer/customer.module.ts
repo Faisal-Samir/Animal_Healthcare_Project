@@ -1,7 +1,9 @@
 import { Module } from "@nestjs/common";
-import { CustomerAppointmentController, CustomerRegistrationController } from "./registration.controller";
+import { CustomerService } from "./customer.service";
+import { CustomerAppointmentController, CustomerController } from "./customer.controller";
 
 @Module({
-    controllers: [CustomerRegistrationController, CustomerAppointmentController],
+    controllers: [CustomerController, CustomerAppointmentController],
+    providers : [CustomerService],
 })
 export class CustomerModule{}
