@@ -1,13 +1,11 @@
 export class CustomerRegistration{
-    name: string;
+    name : string;
     id : number;
     email : string;
-    password : string;
     phone : string;
+    password : string;
+    gender : string;
     address : string;
-    homeNo : string;
-    roadNo : string;
-    postalCode : string;
     city : string;
-    Division : string;
+    division : string; 
 }
