@@ -17,5 +17,15 @@ export class CustomerService{
     insertImage():any{
         return "Upload complete";
     }
+
+    getAppointment(appointment){
+        return "Request for appointment";
+    }
+
+    appointment(queries){
+        return `patient name: ${queries.name}, age: ${queries.age}, phone no: ${queries.phone}, branch: ${queries.branch}, patient want to get appointment from ${queries.type} doctor ${queries.nameOfDoctor}`;
+    }
+
+    
     
 }

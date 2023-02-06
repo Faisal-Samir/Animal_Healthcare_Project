@@ -26,3 +26,12 @@ export class CustomerUploadedAnimalImage{
     color : string;
     gender : string; 
 }
+
+export class CustomerAppointment{
+    patientName : string;
+    age : number;
+    phone : string;
+    branch : string;
+    type : string;
+    nameOfDoctor : string;
+}
