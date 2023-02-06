@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query, Delete } from "@nestjs/common/decorators";
+import { Body, Controller, Get, Param, Post, Put, Query, Delete, ParseIntPipe, UsePipes, ValidationPipe } from "@nestjs/common";
 import { CustomerService } from "./customer.service";
 import { CustomerRegistration, CustomerUpdate, CustomerUploadedAnimalImage, CustomerAppointment, CustomerBlog } from "./customerform.dto";
 
@@ -10,6 +10,7 @@ export class CustomerController{
     constructor (private customerService : CustomerService){}
     // registration purpose route-1
     @Post("/registration")
+    @UsePipes(new ValidationPipe())
     getRegistration(@Body() register : CustomerRegistration):any{
         return this.customerService.getRegistration(register);
     }
@@ -63,7 +64,7 @@ export class CustomerController{
     }
     // route-10
     @Get("/getBlog/:blog_id")
-    findBlogById(@Param("blog_id") id : number){
+    findBlogById(@Param("blog_id", ParseIntPipe) id : number){
         const blog = Blogs.findIndex(blog =>  +blog.blog_id == +id);;
         if(blog == -1)
         {
