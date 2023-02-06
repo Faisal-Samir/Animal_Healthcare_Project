@@ -65,8 +65,8 @@ export class CustomerController{
     // route-10
     @Get("/getBlog/:blog_id")
     findBlogById(@Param("blog_id", ParseIntPipe) id : number){
-        const blog = Blogs.findIndex(blog =>  +blog.blog_id == +id);;
-        if(blog == -1)
+        const blog = Blogs.find(blog =>  +blog.blog_id == +id);;
+        if(!blog)
         {
             return "Blog not found";
         }
