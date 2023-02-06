@@ -18,3 +18,11 @@ export class CustomerUpdate{
     city : string;
     division : string; 
 }
+
+export class CustomerUploadedAnimalImage{
+    fileName : string;
+    caption : string;
+    type : string;
+    color : string;
+    gender : string; 
+}

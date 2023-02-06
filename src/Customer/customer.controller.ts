@@ -1,7 +1,8 @@
 import { Body, Controller, Get, Param, Post, Put, Query } from "@nestjs/common/decorators";
 import { CustomerService } from "./customer.service";
-import { CustomerRegistration, CustomerUpdate } from "./customerform.dto";
+import { CustomerRegistration, CustomerUpdate, CustomerUploadedAnimalImage } from "./customerform.dto";
 
+let CustomerUploadedImage =[];
 @Controller("/customer")
 export class CustomerController{
     constructor (private customerService : CustomerService){}
@@ -13,15 +14,21 @@ export class CustomerController{
 
     @Put("/updateCustomer/:name")
     updateUser( 
-        @Body("name") name:string): any {
+        @Body("name") name:CustomerUpdate): any {
           return this.customerService.updateUser(name);
     }
 
-    @Get("/getcustomer/:id")
-        getUserByID(@Param("id") id:number): any {
-          return this.customerService.getUserByID(id);
+    // all save in array
+
+    @Get("/image")
+    insertImage(@Body() adaption : CustomerUploadedAnimalImage){
+        CustomerUploadedImage.push(adaption);
+        return this.customerService.insertImage();
     }
 
-    // all save in array
+    @Get("/getAdaptionItems")
+    getAllUploadImage(){
+        return CustomerUploadedImage; 
+    }
     
 }

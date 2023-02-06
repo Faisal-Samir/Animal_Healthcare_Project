@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { CustomerRegistration , CustomerUpdate} from "./customerform.dto";
 
-// let Customer =[];
+let CustomerUploadedImage =[];
 @Injectable()
 export class CustomerService{
 
@@ -14,8 +14,8 @@ export class CustomerService{
         return "Customer updated name: " +name;
     }
 
-    getUserByID(id):any {
-        return "the id is "+id;
+    insertImage():any{
+        return "Upload complete";
     }
     
 }
