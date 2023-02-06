@@ -45,5 +45,9 @@ export class CustomerController{
         return this.customerService.appointment(queries);
     }
 
+    @Get("/allAppointment")
+    getAllAppointment(){
+        return AppointmentList;
+    }
     
 }
