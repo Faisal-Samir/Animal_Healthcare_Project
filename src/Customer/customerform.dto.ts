@@ -35,3 +35,9 @@ export class CustomerAppointment{
     type : string;
     nameOfDoctor : string;
 }
+
+export class CustomerBlog{
+    blog_id : string;
+    title : string;
+    description : string;
+}

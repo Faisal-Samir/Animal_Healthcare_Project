@@ -26,6 +26,21 @@ export class CustomerService{
         return `patient name: ${queries.name}, age: ${queries.age}, phone no: ${queries.phone}, branch: ${queries.branch}, patient want to get appointment from ${queries.type} doctor ${queries.nameOfDoctor}`;
     }
 
-    
+    blogWriting():string{
+        return "Blog upload successfully";
+    }
+
+    updateBlog(){
+        return "Blog Updated";
+    }
+
+    deleteById(id){
+        return `delete blog which id is ${id}`;
+    }
+
+    deleteBlogById(id)
+    {
+        return `blog delete id as ${id}`;
+    }
     
 }
