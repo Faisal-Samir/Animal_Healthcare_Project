@@ -1,0 +1,376 @@
+{
+	"info": {
+		"_postman_id": "3cc023c5-7a2b-492d-9db9-b85e0af1b5c9",
+		"name": "Customer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" :\"samir faisal\",\r\n    \"id\" : 1,\r\n    \"email\": \"samir@gmail.com\",\r\n    \"phone \": \"01619252319\",\r\n    \"password \": \"samir2023\",\r\n    \"gender \": \"male\",\r\n    \"address \": \"kalachadpur, Nodda\",\r\n    \"city \": \"baridhara\",\r\n    \"division \": \"Dhaka\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/customer/registration",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customer",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Customer info update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" :\"samir \",\r\n    \"email\": \"samir16@gmail.com\",\r\n    \"password \": \"samir2023\",\r\n    \"address \": \"kalachadpur, Nodda\",\r\n\"    city \": \"baridhara\",\r\n    \"division \": \"Dhaka\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/customer/updateCustomer/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customer",
+						"updateCustomer",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "image Upload",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fileName\" : \"dog.png\",\r\n    \"caption\" : \"for addaption\",\r\n    \"type\" : \"german shefard\",\r\n    \"color\" : \"gradient white\",\r\n    \"gender\" : \"male\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/customer/image",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customer",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Adaption Items",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/customer/getAdaptionItems",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customer",
+						"getAdaptionItems"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "appointment req",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"patientName\" : \"abrar\",\r\n    \"age\" : \"28\",\r\n    \"phone\" : \"01307652049\",\r\n    \"branch\" : \"dhanmondi 2\",\r\n    \"type\" : \"cardio\",\r\n    \"nameOfDoctor\" : \"Dr. Soriful\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/customer/appointment",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customer",
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get appoinment",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/customer/getAppointment?name=kapur&age=27&phone=01307652048&branch=Dhanmond&type=cardiologist&nameOfDoctor=Dr. Soriful",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customer",
+						"getAppointment"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "kapur"
+						},
+						{
+							"key": "age",
+							"value": "27"
+						},
+						{
+							"key": "phone",
+							"value": "01307652048"
+						},
+						{
+							"key": "branch",
+							"value": "Dhanmond"
+						},
+						{
+							"key": "type",
+							"value": "cardiologist"
+						},
+						{
+							"key": "nameOfDoctor",
+							"value": "Dr. Soriful"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get All Appoinment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/customer/allAppointment",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customer",
+						"allAppointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "blog post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"blog_id\" : 1,\r\n    \"title\" : \"About take care of german shepherd dog\",\r\n    \"description\" : \"To care for a German Shepherd, you must feed him a highly nutritious diet, exercise him daily for 1.5 to 2 hours, and socialize him so that he feels safe around humans and other dogs\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/customer/blog",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customer",
+						"blog"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all blog get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/customer/getBlog",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customer",
+						"getBlog"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get blog by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/customer/getBlog/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customer",
+						"getBlog",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upadte blog by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"blog_id\" : 1,\r\n    \"title\" : \"About of german shepherd dog\",\r\n    \"description\" : \"To care for a German Shepherd, you must feed him a highly nutritious diet, exercise him daily for 1.5 to 2 hours, and socialize him so that he feels safe around humans and other dogs\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/customer/updateBlog/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customer",
+						"updateBlog",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete blog by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/customer/delete/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customer",
+						"delete",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete blog from array by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/customer/deleteBlog/3",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"customer",
+						"deleteBlog",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
