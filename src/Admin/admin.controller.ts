@@ -52,6 +52,10 @@ deleteUserbyid(
 return this.adminService.deleteUserbyid(id);
 }
 
-
+@Delete("/deleteuser/:name")
+deleteUserbyname( 
+ @Param("id", ParseIntPipe) id:number): any {
+return this.adminService.deleteUserbyid(name);
+}
 
 }
