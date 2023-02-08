@@ -11,4 +11,8 @@ export class PetShopperController
     getAdmin(): any { 
         return this.petshopperservicec.getIndex();
     }
+    @Get("/index")
+    getPetshop(): any { 
+        return this.petshopperservicec.getIndex();
+    }
 }
