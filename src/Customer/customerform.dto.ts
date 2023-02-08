@@ -1,4 +1,4 @@
-import { IsEmail, IsInt, IsNotEmpty, IsString, Length, Max, Min} from "class-validator";
+import { IsAlpha, IsEmail, IsInt, isNotEmpty, IsNotEmpty, IsString, Length, max, Max, min, Min} from "class-validator";
 export class CustomerRegistration{
     @IsNotEmpty({message : "please provide name"})
     @Length(8, 12 , {message : "please name length provide between 8 to 12 character."})
@@ -56,7 +56,18 @@ export class CustomerAppointment{
 }
 
 export class CustomerBlog{
+    @IsNotEmpty({message : "Provide blog id"})
+    @IsInt({message : "id must be integer"})
+    @Min(1,{message : "blog id minimum required is 1"})
     blog_id : string;
+
+    @IsNotEmpty({message : "Blog title is required"})
+    @Length(30,50, {message : "blog title character is between 30 to 50"})
+    @IsString({message : "Blog tile must be string"})
     title : string;
+
+    @IsNotEmpty({message : "Blog description is required"})
+    @Length(120,480, {message : "blog description character is between 120 to 480"})
+    @IsString({message : "Blog description must be string"})
     description : string;
 }

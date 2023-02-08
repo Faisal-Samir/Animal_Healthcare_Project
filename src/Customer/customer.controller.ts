@@ -53,6 +53,7 @@ export class CustomerController{
     }
     // route-8
     @Post("/blog")
+    @UsePipes(new ValidationPipe())
     blogWriting(@Body() blog : CustomerBlog):string{
         Blogs.push(blog);
         return this.customerService.blogWriting();
