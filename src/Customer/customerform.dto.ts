@@ -1,4 +1,4 @@
-import { IsAlpha, IsEmail, IsInt, isNotEmpty, IsNotEmpty, IsString, Length, max, Max, min, Min} from "class-validator";
+import { IsEmail, IsInt, IsNotEmpty, IsString, Length, Matches, Min} from "class-validator";
 export class CustomerRegistration{
     @IsNotEmpty({message : "please provide name"})
     @Length(8, 12 , {message : "please name length provide between 8 to 12 character."})
@@ -15,14 +15,18 @@ export class CustomerRegistration{
     @IsEmail()
     email : string;
 
-    // @IsNotEmpty({message : "please provide phone number"})
-    // @Min(11,{message : "phone number must be 11 digit"})
-    // @Max(11,{message : "phone number must be 11 digit"})
-    // @IsNotEmpty({message : "please provide password"})
+    @IsNotEmpty({message : "please provide Phone Number"})
+    @Length(11,11,{message : "phone number must be 11 digit"})
+    phone: string;
+
+    @IsNotEmpty({message : "please provide password"})
+    @IsString({message : "password will be string "})
+    // @Matches('[a-zA-z]*[4-9]{4}','',{message : "password is too week"})
+    @Matches(RegExp('[a-zA-z]*[1-9]{6}'),{message : "password is too week"})
     password : string;
 
-    // @IsNotEmpty({message : "please provide gender"})
-    // @IsString({message : "gender will be string "})
+    @IsNotEmpty({message : "please provide gender"})
+    @IsString({message : "gender will be string "})
     gender : string;
     address : string;
     city : string; 
