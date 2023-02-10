@@ -12,7 +12,7 @@ export class CustomerRegistration{
 
     @IsNotEmpty({message : "please provide email"})
     @Length(18, 32 , {message : "please email provide between 18 to 32 character."})
-    @IsEmail()
+    @IsEmail({},{message : 'Follow email format'})
     email : string;
 
     @IsNotEmpty({message : "please provide Phone Number"})
@@ -28,8 +28,17 @@ export class CustomerRegistration{
     @IsNotEmpty({message : "please provide gender"})
     @IsString({message : "gender will be string "})
     gender : string;
+
+    @IsNotEmpty({message : "please provide Address"})
+    @IsString({message : "Address will be string "})
     address : string;
+
+    @IsNotEmpty({message : "please provide City"})
+    @IsString({message : "City will be string "})
     city : string; 
+
+    @IsNotEmpty({message : "please provide Division"})
+    @IsString({message : "Division will be string "})
     division : string; 
 }
 
