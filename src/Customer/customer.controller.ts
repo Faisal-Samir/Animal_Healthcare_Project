@@ -53,6 +53,7 @@ export class CustomerController{
     }
     // route-8
     @Post("/blog")
+    @UsePipes(new ValidationPipe())
     blogWriting(@Body() blog : CustomerBlog):string{
         Blogs.push(blog);
         return this.customerService.blogWriting();
@@ -75,7 +76,7 @@ export class CustomerController{
 
     // route-11
     @Put("/updateBlog/:blog_id")
-    updateBlog(@Param("blog_id") id : number, @Body() updateBlog : CustomerBlog){
+    updateBlog(@Param("blog_id", ParseIntPipe) id : number, @Body() updateBlog : CustomerBlog){
         const blogIndex = Blogs.findIndex(blog =>  +blog.blog_id == +id);
         if (blogIndex == -1) {
             return "Blog not found" ;
@@ -86,13 +87,13 @@ export class CustomerController{
 
     // route-12
     @Delete("/delete/:blog_id")
-    deleteById(@Param("blog_id") id:number){
+    deleteById(@Param("blog_id", ParseIntPipe) id:number){
         return this.customerService.deleteById(id);
     }
 
     // route-13
     @Delete("/deleteBlog/:blog_id")
-    deleteBlogById(@Param("blog_id") id : number){
+    deleteBlogById(@Param("blog_id", ParseIntPipe) id : number){
         Blogs = Blogs.filter(blog => blog.blog_id != +id);
         return this.customerService.deleteBlogById(id);
     }
