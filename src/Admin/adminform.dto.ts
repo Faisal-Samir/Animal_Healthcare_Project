@@ -1,19 +1,99 @@
-import { IsInt, IsNotEmpty, Length } from "class-validator";
+import { IsAlpha, IsEmail, IsInt, IsNotEmpty, IsString, Length, max, Max, min, Min,Validator,Matches,MinLength } from "class-validator";
 
-export class AdminForm {   
 
+//--------------------------------Admin-------------------------------//
+
+export class AdminLogin {   
    
-    
     @IsNotEmpty({message: "Please enter your id"}) 
+    @IsInt()
+    @Min(1,{message : "Id must be greater than or equal 1"})
+    id: number;
+
+
+
+    @IsNotEmpty({message:"Please enter your password"})
+    @IsString()
+    @MinLength(8,{message:"Password must be 8 characters"})
+    @Matches(/^(?=.*[a-z])(?=.*[A-Z])/)
+    password: string;
+}
+
+//----------------------------Admin End---------------------------------//
+
+
+
+
+
+//-----------------------------Doctor Start-----------------------------//
+
+export class DoctorID{
+
+
+    @IsNotEmpty({message: "Please inter your id"}) 
+    @IsInt()
+    id: number;
+}
+
+
+export class DoctorName{
+    
+    @IsNotEmpty({message: "Please enter  id"}) 
     @IsInt()
     id: number;
 
-    @IsNotEmpty({message:"Please enter your name"})
+    @IsNotEmpty({message:"Please enter  name"})
     @Length(3,8)
+    @IsString()
     name: string;
-
-  
-
-
+    
 
 }
+
+export class InsertDoctor{
+
+    @IsNotEmpty({message: "Please enter  id"}) 
+    @IsInt()
+    id: number;
+
+    @IsNotEmpty({message:"Please enter  name"})
+    @Length(3,8)
+    @IsString()
+    name: string;
+
+}
+
+
+
+export class UpdateDoctor{
+    @IsNotEmpty({message: "Please enter  id"}) 
+    @IsInt()
+    id: number;
+
+    @IsNotEmpty({message:"Please enter  name"})
+    @Length(3,8)
+    @IsString()
+    name: string;
+}
+
+
+
+export class UpdateDoctorID{
+    @IsNotEmpty({message: "Please enter  id"}) 
+    @IsInt()
+    id: number;
+
+    @IsNotEmpty({message:"Please enter  name"})
+    @Length(3,8)
+    @IsString()
+    name: string;
+
+}
+
+export class DeleteDoctor{
+    @IsNotEmpty({message: "Please enter  id"}) 
+    @IsInt()
+    id: number;
+}
+
+//------------------------Doctor End-------------------//

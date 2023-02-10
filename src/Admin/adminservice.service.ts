@@ -1,40 +1,72 @@
 import { Injectable } from "@nestjs/common";
-import {AdminForm} from "./adminform.dto"
+import {AdminLogin,DoctorID,DoctorName,InsertDoctor, UpdateDoctor,UpdateDoctorID,DeleteDoctor} from "./adminform.dto"
 
 @Injectable()
 
 export class AdminService{
 
-getRegistration(register : AdminForm): any{
-    
-    return `Registration done for name: ${register.name} and id: ${register.id}`; 
- }
 
+//--------------------------------------For Admin------------------------------//
 getIndex():string{
     return "Admin Index";
-}
-getUserByID(id):any{
-    return "the id is"+id;
-}
-getUserByName(qry):any{
-    return "the id is:"+qry.id + "and name is:"+qry.name;
-}
 
-insertUser(mydto:AdminForm):any {
+ }
+
+getLogin(login : AdminLogin): any{
     
-    return "Admin Inserted name: " + mydto.name+" and id is " + mydto.id;
+    return `Login done for id: ${login.id} and Password: ${login.password}`; 
+ }
+
+ //--------------------------------Admin End---------------------------------------//
+
+
+
+
+
+//-----------------------------------Doctor Start----------------------------------//
+getDoctorByID(doctor : DoctorID):any{
+    return `Here is the details : ${doctor.id}`;
 }
 
-updateUser(name,id):any {
-    return "Admin updated name: " +name+" and id is " +id;
-}
-updateUserbyid(name,id):any {
-    return "Update admin where id " +id+" and change name to " +name;
-}
-deleteUserbyid(id):any {
 
-    return "Delete id is "+id;
+getDoctorByName(doctorName : DoctorName):any{
+    return `Doctor name: ${doctorName.id} and her or his id: ${doctorName.name}`; 
+    
 }
+
+
+getInsertDoctor(insertDoctor:InsertDoctor):any {
+    
+    return "Admin Inserted id: " + insertDoctor.id +" and name is: " + insertDoctor.name;
+}
+
+
+getDoctorUpdate(updateDoctor:UpdateDoctor):any {
+    return "Admin updated name: " +updateDoctor.name +" and id is " +updateDoctor.id;
+}
+
+
+
+
+
+getDoctorUpdateById(updateDoctorId:UpdateDoctorID):any {
+    return "Update admin where id: " +updateDoctorId.id+" and change name to :" +updateDoctorId.name;
+}
+
+
+
+
+getDeleteDoctorById(deleteDoctor:DeleteDoctor):any{
+    return "Delete Id:" +deleteDoctor.id;
+}
+
+
+//--------------------------------Doctor End----------------------------------//
+
+
+
+
+
 
 
 }
