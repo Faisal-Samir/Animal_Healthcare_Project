@@ -34,7 +34,8 @@ foodlist(petshopperdto:PetShopperForm):any{
 elementslist(petshopperdto:PetShopperForm):any{
   return 'Show Medicines : '+ petshopperdto.name+'and id is'+petshopperdto.id;
 }
-
-
+postblog(petshopperdto:PetShopperForm):any{
+  return 'Show Medicines : '+ petshopperdto.name+'and id is'+petshopperdto.id;
+}
 
 }

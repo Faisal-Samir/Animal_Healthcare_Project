@@ -42,9 +42,12 @@ export class PetShopperController
     return this.petshopperservicec.foodlist(qry);
   }
   @Get('/elementslist/:id')//route 9
-  elementslist(@Query()qry:any):any {
+  elementslist(@Query()qry:any):any {cl
     return this.petshopperservicec.medicinelist(qry);
   }
- 
+  @Post('/postblog/:id')//route 6
+  postblog(@Body('name')name: string,@Param('id') id: number,):any{
+    return this.petshopperservicec.postblog(name, id);
   
+}
 }
