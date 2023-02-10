@@ -44,7 +44,7 @@ export class DoctorName{
 
     @IsNotEmpty({message:"Please enter  name"})
     @Length(3,8)
-    @IsString()
+    @IsString({message : "Name must be string"})
     name: string;
     
 
@@ -58,7 +58,7 @@ export class InsertDoctor{
 
     @IsNotEmpty({message:"Please enter  name"})
     @Length(3,8)
-    @IsString()
+    @IsString({message : "Name must be string"})
     name: string;
 
 }
@@ -72,7 +72,7 @@ export class UpdateDoctor{
 
     @IsNotEmpty({message:"Please enter  name"})
     @Length(3,8)
-    @IsString()
+    @IsString({message : "Name must be string"})
     name: string;
 }
 
@@ -85,7 +85,7 @@ export class UpdateDoctorID{
 
     @IsNotEmpty({message:"Please enter  name"})
     @Length(3,8)
-    @IsString()
+    @IsString({message : "Name must be string"})
     name: string;
 
 }
@@ -97,3 +97,77 @@ export class DeleteDoctor{
 }
 
 //------------------------Doctor End-------------------//
+
+//----------------------Customer----------------------//
+
+export class CustomerID{
+
+
+    @IsNotEmpty({message: "Please inter your id"}) 
+    @IsInt()
+    id: number;
+}
+
+
+export class CustomerName{
+    
+    @IsNotEmpty({message: "Please enter  id"}) 
+    @IsInt()
+    id: number;
+
+    @IsNotEmpty({message:"Please enter  name"})
+    @Length(3,8)
+    @IsString({message : "Name must be string"})
+    name: string;
+    
+
+}
+
+export class InsertCustomer{
+
+    @IsNotEmpty({message: "Please enter  id"}) 
+    @IsInt()
+    id: number;
+
+    @IsNotEmpty({message:"Please enter  name"})
+    @Length(3,8)
+    @IsString({message : "Name must be string"})
+    name: string;
+
+}
+
+
+
+export class UpdateCustomer{
+    @IsNotEmpty({message: "Please enter  id"}) 
+    @IsInt()
+    id: number;
+
+    @IsNotEmpty({message:"Please enter  name"})
+    @Length(3,8)
+    @IsString({message : "Name must be string"})
+    name: string;
+}
+
+
+
+export class UpdateCustomerID{
+    @IsNotEmpty({message: "Please enter  id"}) 
+    @IsInt()
+    id: number;
+
+    @IsNotEmpty({message:"Please enter  name"})
+    @Length(3,8)
+    @IsString({message : "Name must be string"})
+    name: string;
+
+}
+
+export class DeleteCustomer{
+    @IsNotEmpty({message: "Please enter  id"}) 
+    @IsInt()
+    id: number;
+}
+
+
+//------------------------Customer End-----------------//
