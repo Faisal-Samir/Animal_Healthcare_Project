@@ -42,12 +42,18 @@ export class PetShopperController
     return this.petshopperservicec.foodlist(qry);
   }
   @Get('/elementslist/:id')//route 9
-  elementslist(@Query()qry:any):any {cl
+  elementslist(@Query()qry:any):any {
     return this.petshopperservicec.medicinelist(qry);
   }
-  @Post('/postblog/:id')//route 6
-  postblog(@Body('name')name: string,@Param('id') id: number,):any{
-    return this.petshopperservicec.postblog(name, id);
+  @Post('/postblog/:id')//route 10
+  postblog(@Query()qry:any):any {
+    return this.petshopperservicec.postblog(qry);
   
 }
+@Delete('/delteblog/:id')//route 11
+  delteblog(@Query()qry:any):any {
+    return this.petshopperservicec.deleteblog(qry);
+  
+}
+
 }

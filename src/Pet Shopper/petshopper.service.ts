@@ -37,5 +37,8 @@ elementslist(petshopperdto:PetShopperForm):any{
 postblog(petshopperdto:PetShopperForm):any{
   return 'Show Medicines : '+ petshopperdto.name+'and id is'+petshopperdto.id;
 }
+deleteblog(petshopperdto:PetShopperForm):any{
+  return 'Show Medicines : '+ petshopperdto.name+'and id is'+petshopperdto.id;
+}
 
 }
