@@ -50,9 +50,14 @@ export class PetShopperController
     return this.petshopperservicec.postblog(qry);
   
 }
-@Delete('/delteblog/:id')//route 11
+@Post('/postinfo/:id')//route 11
+postinfo(@Query()qry:any):any {
+  return this.petshopperservicec.postblog(qry);
+
+}
+@Delete('/delteblog/:id')//route 12
   delteblog(@Query()qry:any):any {
-    return this.petshopperservicec.deleteblog(qry);
+    return this.petshopperservicec.postinfo(qry);
   
 }
 
