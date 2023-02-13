@@ -40,5 +40,8 @@ postblog(petshopperdto:PetShopperForm):any{
 deleteblog(petshopperdto:PetShopperForm):any{
   return 'Show Medicines : '+ petshopperdto.name+'and id is'+petshopperdto.id;
 }
+postinfo(petshopperdto:PetShopperForm):any{
+  return 'Show Medicines : '+ petshopperdto.name+'and id is'+petshopperdto.id;
+}
 
 }

@@ -1,5 +1,15 @@
 import {  Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, Req, Request, UsePipes, ValidationPipe,BadRequestException,HttpStatus,HttpCode  } from "@nestjs/common";
-import {AdminLogin, DoctorID,DoctorName,InsertDoctor, UpdateDoctor,UpdateDoctorID,DeleteDoctor } from "./adminform.dto";
+
+
+import {
+    AdminLogin, 
+    DoctorID,DoctorName,InsertDoctor, UpdateDoctor,UpdateDoctorID,DeleteDoctor, 
+    CustomerID,CustomerName,InsertCustomer, UpdateCustomer,UpdateCustomerID,DeleteCustomer
+
+
+} from "./adminform.dto";
+
+
 import { AdminService } from "./adminservice.service";
 
 
@@ -89,6 +99,77 @@ return this.adminService.getDeleteDoctorById(deleteDoctor);
 }
 
 //-----------------------------------------Doctor End---------------------------------//
+
+
+
+
+
+
+//----------------------------------------Customer-------------------------------------//
+
+
+//Admin search customer using id//
+
+@Get("/customerUser/:id")
+@UsePipes(new ValidationPipe())
+getCustomerByID(@Body() customer:CustomerID): any{
+    return this.adminService.getCustomerByID(customer);
+
+ }
+
+//Admin search customer using name or id//
+
+@Get("/cfinduser")
+@UsePipes(new ValidationPipe())
+getCustomerByName(@Body() customerName:CustomerName):any{
+    return this.adminService.getCustomerByName(customerName);
+}
+
+
+
+//Admin insert customer//
+
+@Post("/insertCustomer")
+@UsePipes(new ValidationPipe())
+getInsertCustomer(@Body() insertCustomer:InsertCustomer): any {
+  return this.adminService.getInsertCustomer(insertCustomer);
+}
+
+
+//Admin update customer//
+
+@Put("/cupdateuser/")
+@UsePipes(new ValidationPipe())
+getCustomerUpdate(@Body() customerUpdate:UpdateCustomer): any {
+return this.adminService.getCustomerUpdate(customerUpdate);
+}
+
+
+//Admin update customer using id//
+
+
+@Put("/cupdateuser/:id")
+@UsePipes(new ValidationPipe())
+getCustomerUpdateById( @Body() updateCustomerId: UpdateCustomerID): any {
+return this.adminService.getCustomerUpdateById(updateCustomerId);
+}
+
+
+//Admin delete customer//
+
+@Delete("/cdeleteuser/:id")
+@UsePipes(new ValidationPipe())
+getDeleteCustomerById( @Body() deleteCustomer:DeleteCustomer): any {
+return this.adminService.getDeleteCustomerById(deleteCustomer);
+
+}
+
+
+
+
+
+
+//----------------------------------------Customer End----------------------------------//
 
 
 
