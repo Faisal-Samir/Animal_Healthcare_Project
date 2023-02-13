@@ -24,6 +24,7 @@ export class CustomerController{
     // all save in array
     // users animal photo upload to adaption purpose route-3
     @Get("/image")
+    @UsePipes(new ValidationPipe())
     insertImage(@Body() adaption : CustomerUploadedAnimalImage){
         CustomerUploadedImage.push(adaption);
         return this.customerService.insertImage();
@@ -36,6 +37,7 @@ export class CustomerController{
     }
     // route-5
     @Post("/appointment")
+    @UsePipes(new ValidationPipe())
     getAppointment(@Body() appointment : CustomerAppointment)
     {
         AppointmentList.push(appointment);
