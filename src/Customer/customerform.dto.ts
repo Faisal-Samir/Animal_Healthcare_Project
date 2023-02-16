@@ -142,3 +142,4 @@ export class CustomerBlog{
     @IsString({message : "Blog description must be string"})
     description : string;
 }
+// all done without database
