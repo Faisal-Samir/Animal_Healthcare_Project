@@ -8,39 +8,40 @@ let Blogs = [];
 @Controller("/customer")
 export class CustomerController{
     constructor (private customerService : CustomerService){}
-    // registration purpose route-1
+
+    // registration purpose route-1 using database
     @Post("/registration")
     @UsePipes(new ValidationPipe())
     getRegistration(@Body() register : CustomerRegistration):any{
         return this.customerService.getRegistration(register);
     }
+
+
     // update Customer profile by it's name route-2
-    @Put("/updateCustomer/:name")
+    @Put("/updateCustomer")
     updateUser( 
-        @Body("name") name:CustomerUpdate): any {
-          return this.customerService.updateUser(name);
+        @Body("name") name:CustomerRegistration,@Body('id') id: number, @Body("email") email:CustomerRegistration, @Body("password") password:CustomerRegistration,@Body("address") address:CustomerRegistration, @Body("city") city:CustomerRegistration, @Body("division") division:CustomerRegistration): any {
+          return this.customerService.updateUser(name,id,email,password,address,division,city);
     }
 
     // all save in array
     // users animal photo upload to adaption purpose route-3
     @Get("/image")
     @UsePipes(new ValidationPipe())
-    insertImage(@Body() adaption : CustomerUploadedAnimalImage){
-        CustomerUploadedImage.push(adaption);
-        return this.customerService.insertImage();
+    insertImage(@Body() adaption : CustomerUploadedAnimalImage):any{
+        return this.customerService.insertImage(adaption);
     }
     // return all pet animal image means history of adaption list for instant of database store it in an array route-4
 
     @Get("/getAdaptionItems")
     getAllUploadImage(){
-        return CustomerUploadedImage; 
+        return this.customerService.getAllUploadImage(); 
     }
     // route-5
     @Post("/appointment")
     @UsePipes(new ValidationPipe())
     getAppointment(@Body() appointment : CustomerAppointment)
     {
-        AppointmentList.push(appointment);
         return this.customerService.getAppointment(appointment);
     }
     // route-6
@@ -51,7 +52,7 @@ export class CustomerController{
     // route-7
     @Get("/allAppointment")
     getAllAppointment(){
-        return AppointmentList;
+        return this.customerService.getAllAppointment();
     }
     // route-8
     @Post("/blog")

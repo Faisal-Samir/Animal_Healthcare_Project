@@ -7,10 +7,23 @@ import { CustomerModule } from "./Customer/customer.module";
 import { AdminModule } from "./Admin/adminmodule.module";
 
 import { PetShopperModule } from "./Pet Shopper/petshopper.module";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { CustomerEntity } from "./Customer/customer.entity";
+import { AdaptionEntity } from "./Customer/adaption.entity";
+import { AppointmentEntity } from "./Customer/appointment.entity";
 
 
 @Module({
-    imports : [DoctorModule,CustomerModule,AdminModule,PetShopperModule,],
+    imports : [TypeOrmModule.forRoot({
+        type: 'postgres',
+        host: 'localhost',
+        port: 5432,
+        username: 'postgres',
+        password: 'samir2022',
+        database: 'Animal_Care',
+        entities: [CustomerEntity,AdaptionEntity,AppointmentEntity],
+        synchronize: true,
+      }),DoctorModule,CustomerModule,AdminModule,PetShopperModule,],
 })
 export class AppModule {}
 
