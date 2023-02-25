@@ -5,6 +5,7 @@ import { CustomerRegistration, CustomerUpdate, CustomerUploadedAnimalImage, Cust
 let CustomerUploadedImage =[];
 let AppointmentList = [];
 let Blogs = [];
+
 @Controller("/customer")
 export class CustomerController{
     constructor (private customerService : CustomerService){}
