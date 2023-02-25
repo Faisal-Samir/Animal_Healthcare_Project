@@ -1,19 +1,26 @@
-import { Controller, Post, Put, Get, Body, Query, Delete, Param } from "@nestjs/common";
-//import { Get } from "@nestjs/common/decorators";
+import { Controller, Post, Put, Get, Body, Query, Delete, Param, UsePipes, ValidationPipe } from "@nestjs/common";
 import { DoctorService } from "./doctor.service";
-import DoctorForm from "./doctorform.dto";
+import { DoctorRegistration } from "./doctorform.dto";
 
 @Controller("/doctor")
 export class DoctorController
 {
     constructor( private doctorService: DoctorService ){}
 
-    @Get("/index")//route 1
-        getDoctor(): any{
-        return this.doctorService.getIndex();
+    @Post("/registration")//route 1
+    @UsePipes(new ValidationPipe())
+    getRegistration(@Body() register : DoctorRegistration): any{
+        return this.doctorService.getRegistration(register);
     }
     
-    @Post('/insertuser')//route 2
+    @Put("/updateDoctor")
+    updateUser(
+        @Body("name") name:DoctorRegistration, @Body("phone") phone:DoctorRegistration, @Body("email") email:DoctorRegistration, @Body("password") password:DoctorRegistration, @Body('id') id: number): any {
+            return this.doctorService.updateUser(name,id,phone,email,password);
+        }
+    
+    
+    /*@Post('/insertuser')//route 2
         insertUser(@Body() doctordto: DoctorForm): any {
         return this.doctorService.insertUser(doctordto);
     }
@@ -30,8 +37,6 @@ export class DoctorController
     @Delete('/deleteuser/:id') //route 5
         deleteuser(@Body('name')name: string,@Param('id')id:number,):any{
         return this.doctorService.deleteuser(name,id);
-    }
+    }*/
     
-
-
 }
