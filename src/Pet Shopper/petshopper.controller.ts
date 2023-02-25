@@ -1,11 +1,19 @@
-import {Controller,Get,Post,Body,Param,Put, Query,Delete} from "@nestjs/common";
+import {Controller,Get,Post,Body,Param,Put, Query,Delete, UsePipes, ValidationPipe} from "@nestjs/common";
 import { PetShopperService } from "./petshopper.service";
-import {PetShopperForm} from "./petshopperform.dto";
+import {PetshopperBlog, PetShopperForm, petshopperregistration} from "./petshopperform.dto";
 
+
+let blog=[];
 @Controller("/petshopper")
 export class PetShopperController
 { 
   constructor(private petshopperservicec: PetShopperService){}
+
+  @Post("/registration")
+  @UsePipes(new ValidationPipe())
+  getRegistration(@Body() register : petshopperregistration):any{
+      return this.petshopperservicec.getRegistration(register);
+  }
 
   @Get("/index") //route 1
     getAdmin(): any { 
@@ -23,8 +31,8 @@ export class PetShopperController
   }
 
   @Put('/updateuser/:id') //route 4
-  updateuserbyid(@Body('name') name: string, @Param('id') id: number,): any {
-    return this.petshopperservicec.updateuser(name, id);
+  updateuserbyid(@Body('name') name: string,@Body('email') email:string,@Body('address') address:string,@Body('password')password:string, @Param('id') id: number,): any {
+    return this.petshopperservicec.updateuser(name, id,email,address,password);
   }
   @Delete('/deleteuser/:id') //route 5
   deleteuser(@Body('name')name: string,@Param('id')id:number,):any{
@@ -46,6 +54,11 @@ export class PetShopperController
     return this.petshopperservicec.medicinelist(qry);
   }
   @Post('/postblog/:id')//route 10
+  @UsePipes(new ValidationPipe())
+  blogWriting(@Body() blog:PetshopperBlog):string{
+    blog.push(blog);
+    return this.petshopperservicec.blogwriting();
+  }
   postblog(@Query()qry:any):any {
     return this.petshopperservicec.postblog(qry);
   
@@ -60,7 +73,5 @@ postinfo(@Query()qry:any):any {
     return this.petshopperservicec.postinfo(qry);
   
 }
-
-
 
 }
