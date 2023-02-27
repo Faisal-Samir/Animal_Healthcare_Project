@@ -1,8 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { title } from "process";
 import { Repository } from "typeorm";
 import { AdaptionEntity } from "./adaption.entity";
 import { AppointmentEntity} from "./appointment.entity";
+import { BlogEntity } from "./blog.entity";
 import { CustomerEntity } from "./customer.entity";
 import { CustomerRegistration , CustomerUpdate, CustomerUploadedAnimalImage} from "./customerform.dto";
 
@@ -16,6 +18,8 @@ export class CustomerService{
         private adaptionRepo : Repository<AdaptionEntity>,
         @InjectRepository(AppointmentEntity)
         private appointmentRepo : Repository<AppointmentEntity>,
+        @InjectRepository(BlogEntity)
+        private blogRepo : Repository<BlogEntity>,
       ) {}
     getRegistration(register : CustomerRegistration): any{
         const customerAccount = new CustomerEntity();
@@ -30,9 +34,8 @@ export class CustomerService{
         return this.customerRepo.save(customerAccount);
     }
     
-    updateUser(name,id,email,password,address,city,division):any {
-        console.log(`changed name is ${name}, email is ${email}, password is ${password}, address is ${address} and city is ${city} user id is ${id}`);
-        return this.customerRepo.update(id,{name:name,email:email,password:password,address:address,city:city,division:division});
+    updateUserById(myDto:CustomerRegistration,id:number):any {
+        return this.customerRepo.update(id,myDto);
     }
 
     insertImage(adaption):any{
@@ -68,20 +71,29 @@ export class CustomerService{
         return this.appointmentRepo.find();
     }
 
-    blogWriting():string{
-        return "Blog upload successfully";
+    blogWriting(blog):any{
+        const blogWriting = new BlogEntity();
+        blogWriting.title = blog.title;
+        blogWriting.description = blog.description;
+        return this.blogRepo.save(blogWriting);
+    }
+    getBlog(){
+        return this.blogRepo.find();
     }
 
-    updateBlog(){
-        return "Blog Updated";
+    findBlogById(id){
+        return this.blogRepo.findOneBy({id});
+    }
+    updateBlog(id,blogDto):any{
+        return this.blogRepo.update(id,blogDto);
     }
 
-    deleteById(id){
-        return `delete blog which id is ${id}`;
-    }
+    // deleteById(id){
+    //     return this.blogRepo.delete(id);
+    // }
 
     deleteBlogById(id)
     {
-        return `blog delete id as ${id}`;
+        return this.blogRepo.delete(id);
     }   
 }

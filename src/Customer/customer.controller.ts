@@ -1,10 +1,7 @@
 import { Body, Controller, Get, Param, Post, Put, Query, Delete, ParseIntPipe, UsePipes, ValidationPipe } from "@nestjs/common";
 import { CustomerService } from "./customer.service";
-import { CustomerRegistration, CustomerUpdate, CustomerUploadedAnimalImage, CustomerAppointment, CustomerBlog } from "./customerform.dto";
+import { CustomerRegistration, CustomerUploadedAnimalImage, CustomerAppointment, CustomerBlog } from "./customerform.dto";
 
-let CustomerUploadedImage =[];
-let AppointmentList = [];
-let Blogs = [];
 @Controller("/customer")
 export class CustomerController{
     constructor (private customerService : CustomerService){}
@@ -18,13 +15,11 @@ export class CustomerController{
 
 
     // update Customer profile by it's name route-2
-    @Put("/updateCustomer")
-    updateUser( 
-        @Body("name") name:CustomerRegistration,@Body('id') id: number, @Body("email") email:CustomerRegistration, @Body("password") password:CustomerRegistration,@Body("address") address:CustomerRegistration, @Body("city") city:CustomerRegistration, @Body("division") division:CustomerRegistration): any {
-          return this.customerService.updateUser(name,id,email,password,address,division,city);
+    @Put("/updateCustomer/:id")
+    updateUserById( 
+        @Body() myDto:CustomerRegistration,@Param('id',ParseIntPipe) id: number): any {
+          return this.customerService.updateUserById(myDto,id);
     }
-
-    // all save in array
     // users animal photo upload to adaption purpose route-3
     @Get("/image")
     @UsePipes(new ValidationPipe())
@@ -58,46 +53,37 @@ export class CustomerController{
     @Post("/blog")
     @UsePipes(new ValidationPipe())
     blogWriting(@Body() blog : CustomerBlog):string{
-        Blogs.push(blog);
-        return this.customerService.blogWriting();
+        return this.customerService.blogWriting(blog);
     }
     // route-9
+    // using it customer can see all his/her blog those he/she uploaded
     @Get("/getBlog")
     getBlog(){
-        return Blogs;
+        return this.customerService.getBlog();
     }
     // route-10
-    @Get("/getBlog/:blog_id")
-    findBlogById(@Param("blog_id", ParseIntPipe) id : number){
-        const blog = Blogs.find(blog =>  +blog.blog_id == +id);;
-        if(!blog)
-        {
-            return "Blog not found";
-        }
-        return blog;
+    // user acn search their blog by blog id
+    @Get("/getBlog/:id")
+    findBlogById(@Param("id", ParseIntPipe) id : number){
+        return this.customerService.findBlogById(id);
     }
 
     // route-11
-    @Put("/updateBlog/:blog_id")
-    updateBlog(@Param("blog_id", ParseIntPipe) id : number, @Body() updateBlog : CustomerBlog){
-        const blogIndex = Blogs.findIndex(blog =>  +blog.blog_id == +id);
-        if (blogIndex == -1) {
-            return "Blog not found" ;
-        }
-        Blogs[blogIndex] = updateBlog;
-        return this.customerService.updateBlog();
+    @Put("/updateBlog/:id")
+    updateBlog(@Param("id", ParseIntPipe) id : number, @Body() blogDto : CustomerBlog){
+        return this.customerService.updateBlog(id,blogDto);
     }
 
     // route-12
-    @Delete("/delete/:blog_id")
-    deleteById(@Param("blog_id", ParseIntPipe) id:number){
-        return this.customerService.deleteById(id);
-    }
+    // @Delete("/delete/:id")
+    // deleteById(@Param("d", ParseIntPipe) id:number){
+    //     return this.customerService.deleteById(id);
+    // }
 
     // route-13
-    @Delete("/deleteBlog/:blog_id")
-    deleteBlogById(@Param("blog_id", ParseIntPipe) id : number){
-        Blogs = Blogs.filter(blog => blog.blog_id != +id);
+    @Delete("/deleteBlog/:id")
+    deleteBlogById(@Param("id", ParseIntPipe) id : number){
+        console.log(`deleted blog id is ${id}`)
         return this.customerService.deleteBlogById(id);
     }
 }
