@@ -11,7 +11,11 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { CustomerEntity } from "./Customer/customer.entity";
 import { AdaptionEntity } from "./Customer/adaption.entity";
 import { AppointmentEntity } from "./Customer/appointment.entity";
+<<<<<<< HEAD
 import { BlogEntity } from "./Customer/blog.entity";
+=======
+import { PetshopperEntity } from "./Pet Shopper/petshopper.entity";
+>>>>>>> bb99542351a9c473a3bbcf902e0e693ae50db9b4
 
 
 @Module({
@@ -22,7 +26,11 @@ import { BlogEntity } from "./Customer/blog.entity";
         username: 'postgres',
         password: 'samir2022',
         database: 'Animal_Care',
+<<<<<<< HEAD
         entities: [CustomerEntity,AdaptionEntity,AppointmentEntity,BlogEntity],
+=======
+        entities: [CustomerEntity,AdaptionEntity,AppointmentEntity,PetshopperEntity],
+>>>>>>> bb99542351a9c473a3bbcf902e0e693ae50db9b4
         synchronize: true,
       }),DoctorModule,CustomerModule,AdminModule,PetShopperModule,],
 })

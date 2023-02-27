@@ -1,5 +1,5 @@
 
-import { IsInt,isNotEmpty,isString,isEmail,Length,Min, IsNotEmpty, IsString } from "class-validator";
+import { IsInt,isNotEmpty,isString,isEmail,Length,Min, IsNotEmpty, IsString, IsEmail, Matches } from "class-validator";
 
 export class petshopperregistration{
 
@@ -16,10 +16,10 @@ export class petshopperregistration{
     password : string;
 
     //Name ID validation 
-    @IsNotEmpty({message : "Please Enter the Name"})
+    /*@IsNotEmpty({message : "Please Enter the Name"})
     @IsInt({message : "provide id as a integer number"},)
     @Min(1,{message : "Id must be greater than or equal 1"})
-    id : number;
+    id : number;*/
 
     //Phone Number Validation
     @IsNotEmpty({message : "please provide Phone Number"})
@@ -30,6 +30,27 @@ export class petshopperregistration{
 
 }
 
+export class Petshopperinsert{
+    @IsNotEmpty({message : "Please Insert your name"})
+    @IsString({message:"Only String value is required"})
+    name : string;
+
+    @IsNotEmpty({message:"Provided your email"})
+    @IsEmail({},{message: "Follow email rules"})
+    email: string;
+
+    @IsNotEmpty({message:"Set Password"})
+    @IsString({message:"Password will be string"})
+    password:string;
+
+    @IsNotEmpty({message : "Provide Address"})
+    @IsString({message : "Address will be string "})
+    address : string;
+}
+
+
+
+
 
 export class PetShopperForm {   
     id: number;
@@ -39,6 +60,9 @@ export class PetShopperForm {
 
 }
 export class PetshopperBlog {
+    push(blog: PetshopperBlog) {
+      throw new Error("Method not implemented.");
+    }
     id: number;
     title: string;
     description: string;

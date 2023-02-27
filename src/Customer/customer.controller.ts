@@ -2,6 +2,13 @@ import { Body, Controller, Get, Param, Post, Put, Query, Delete, ParseIntPipe, U
 import { CustomerService } from "./customer.service";
 import { CustomerRegistration, CustomerUploadedAnimalImage, CustomerAppointment, CustomerBlog } from "./customerform.dto";
 
+<<<<<<< HEAD
+=======
+let CustomerUploadedImage =[];
+let AppointmentList = [];
+let Blogs = [];
+
+>>>>>>> bb99542351a9c473a3bbcf902e0e693ae50db9b4
 @Controller("/customer")
 export class CustomerController{
     constructor (private customerService : CustomerService){}
