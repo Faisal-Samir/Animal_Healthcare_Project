@@ -71,6 +71,10 @@ export class CustomerService{
         return this.appointmentRepo.find();
     }
 
+    updateAppointment(id,appointmentDto):any{
+        return this.appointmentRepo.update(id,appointmentDto);
+    }
+
     blogWriting(blog):any{
         const blogWriting = new BlogEntity();
         blogWriting.title = blog.title;
@@ -84,16 +88,14 @@ export class CustomerService{
     findBlogById(id){
         return this.blogRepo.findOneBy({id});
     }
+
     updateBlog(id,blogDto):any{
         return this.blogRepo.update(id,blogDto);
     }
 
-    // deleteById(id){
-    //     return this.blogRepo.delete(id);
-    // }
-
     deleteBlogById(id)
     {
         return this.blogRepo.delete(id);
-    }   
+    } 
+    
 }

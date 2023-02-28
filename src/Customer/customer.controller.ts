@@ -27,8 +27,8 @@ export class CustomerController{
     insertImage(@Body() adaption : CustomerUploadedAnimalImage):any{
         return this.customerService.insertImage(adaption);
     }
-    // return all pet animal image means history of adaption list for instant of database store it in an array route-4
 
+    // return all pet animal image means history of adaption list for instant of database store it in an array route-4
     @Get("/getAdaptionItems")
     getAllUploadImage(){
         return this.customerService.getAllUploadImage(); 
@@ -50,36 +50,38 @@ export class CustomerController{
     getAllAppointment(){
         return this.customerService.getAllAppointment();
     }
-    // route-8
+
+    // roue-8
+    @Put("/updateAppointment/:id")
+    updateAppointment(@Param("id",ParseIntPipe)id:number,@Body()appointmentDto : CustomerAppointment){
+        return this.customerService.updateAppointment(id,appointmentDto);
+    }
+    // route-9
     @Post("/blog")
     @UsePipes(new ValidationPipe())
     blogWriting(@Body() blog : CustomerBlog):string{
         return this.customerService.blogWriting(blog);
     }
-    // route-9
+    // route-10
     // using it customer can see all his/her blog those he/she uploaded
     @Get("/getBlog")
     getBlog(){
         return this.customerService.getBlog();
     }
-    // route-10
+    // route-11
     // user acn search their blog by blog id
     @Get("/getBlog/:id")
     findBlogById(@Param("id", ParseIntPipe) id : number){
         return this.customerService.findBlogById(id);
     }
 
-    // route-11
+    // route-12
     @Put("/updateBlog/:id")
     updateBlog(@Param("id", ParseIntPipe) id : number, @Body() blogDto : CustomerBlog){
         return this.customerService.updateBlog(id,blogDto);
     }
 
-    // route-12
-    // @Delete("/delete/:id")
-    // deleteById(@Param("d", ParseIntPipe) id:number){
-    //     return this.customerService.deleteById(id);
-    // }
+    
 
     // route-13
     @Delete("/deleteBlog/:id")
@@ -87,4 +89,6 @@ export class CustomerController{
         console.log(`deleted blog id is ${id}`)
         return this.customerService.deleteBlogById(id);
     }
+
+    
 }
