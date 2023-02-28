@@ -15,10 +15,4 @@ export class PetshopperEntity{
 
     @Column()
     password : string;
-
-
-
-
-
- 
 }

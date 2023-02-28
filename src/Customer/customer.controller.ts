@@ -91,7 +91,7 @@ export class CustomerController{
     }
 
     // route-14
-    // upload image to get treatment help from emergency
+    // upload image to get treatment help for emergency
     @Post("/imageUpload")
     @UseInterceptors(FileInterceptor('image',
     {storage:diskStorage({
