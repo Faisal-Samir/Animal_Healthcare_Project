@@ -6,7 +6,8 @@ import { AdaptionEntity } from "./adaption.entity";
 import { AppointmentEntity} from "./appointment.entity";
 import { BlogEntity } from "./blog.entity";
 import { CustomerEntity } from "./customer.entity";
-import { CustomerRegistration , CustomerUpdate, CustomerUploadedAnimalImage} from "./customerform.dto";
+import { CustomerImageUpload, CustomerRegistration , CustomerUpdate, CustomerUploadedAnimalImage} from "./customerform.dto";
+import { EmergencyHelpEntity } from "./emergencyHelp.entity";
 
 @Injectable()
 export class CustomerService{
@@ -20,6 +21,8 @@ export class CustomerService{
         private appointmentRepo : Repository<AppointmentEntity>,
         @InjectRepository(BlogEntity)
         private blogRepo : Repository<BlogEntity>,
+        @InjectRepository(EmergencyHelpEntity)
+        private emergencyHelpRepo : Repository<EmergencyHelpEntity>,
       ) {}
     getRegistration(register : CustomerRegistration): any{
         const customerAccount = new CustomerEntity();
@@ -97,5 +100,9 @@ export class CustomerService{
     {
         return this.blogRepo.delete(id);
     } 
+
+    emergencyHelp(ImageUpload:CustomerImageUpload){
+        return this.emergencyHelpRepo.save(ImageUpload);
+    }
     
 }

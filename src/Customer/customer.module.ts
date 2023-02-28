@@ -6,9 +6,10 @@ import { BlogEntity } from "./blog.entity";
 import { CustomerController } from "./customer.controller";
 import { CustomerEntity } from "./customer.entity";
 import { CustomerService } from "./customer.service";
+import { EmergencyHelpEntity } from "./emergencyHelp.entity";
 
 @Module({
-    imports : [TypeOrmModule.forFeature([AdaptionEntity,CustomerEntity,AppointmentEntity,BlogEntity])],
+    imports : [TypeOrmModule.forFeature([AdaptionEntity,CustomerEntity,AppointmentEntity,BlogEntity,EmergencyHelpEntity])],
     controllers : [CustomerController],
     providers : [CustomerService],
 })

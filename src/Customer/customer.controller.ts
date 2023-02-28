@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Param, Post, Put, Query, Delete, ParseIntPipe, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Query, Delete, ParseIntPipe, UsePipes, ValidationPipe, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, UseInterceptors } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { diskStorage } from "multer";
 import { CustomerService } from "./customer.service";
-import { CustomerRegistration, CustomerUploadedAnimalImage, CustomerAppointment, CustomerBlog } from "./customerform.dto";
+import { CustomerRegistration, CustomerUploadedAnimalImage, CustomerAppointment, CustomerBlog, CustomerImageUpload } from "./customerform.dto";
 
 
 @Controller("/customer")
@@ -81,14 +83,40 @@ export class CustomerController{
         return this.customerService.updateBlog(id,blogDto);
     }
 
-    
-
     // route-13
     @Delete("/deleteBlog/:id")
     deleteBlogById(@Param("id", ParseIntPipe) id : number){
         console.log(`deleted blog id is ${id}`)
         return this.customerService.deleteBlogById(id);
     }
+
+    // route-14
+    // upload image to get treatment help from emergency
+    @Post("/imageUpload")
+    @UseInterceptors(FileInterceptor('image',
+    {storage:diskStorage({
+        destination: '../HelpImage',
+        filename : function(_req,file, cb){
+            cb(null,Date.now()+file.originalname)
+        }
+    })}
+    ))
+    uploadFile(@Body()uploadDto:CustomerImageUpload,@UploadedFile(
+        new ParseFilePipe({
+            validators: [
+                new MaxFileSizeValidator({maxSize:2000000}),
+                new FileTypeValidator({ fileType: /(jpg|jpeg|png)$/}),
+            ],
+        }),
+    )image: Express.Multer.File){
+        console.log(uploadDto);
+        console.log(image.filename);
+        console.log(image.originalname);
+
+        uploadDto.file = image.filename;
+        return this.customerService.emergencyHelp(uploadDto);
+    }
+    // finish
 
     
 }
