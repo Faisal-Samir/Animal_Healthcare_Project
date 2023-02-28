@@ -16,6 +16,11 @@ export class PetshopperEntity{
     @Column()
     password : string;
 
+    @Column()
+    Address: string;
+
+    
+
 
 
 

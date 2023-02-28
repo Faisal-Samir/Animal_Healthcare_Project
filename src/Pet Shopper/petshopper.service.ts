@@ -27,8 +27,6 @@ export class PetShopperService {
 getIndex():string { 
     return "Petshopper Index"; 
 }
-
-
 insertUser(petshopperdto: PetShopperForm): any{
   return 'Pet shopper Inserted name: ' + petshopperdto.name + ' and id is ' + petshopperdto.id;
 }

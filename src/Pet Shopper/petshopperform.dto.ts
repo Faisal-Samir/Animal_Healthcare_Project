@@ -26,7 +26,8 @@ export class petshopperregistration{
     @Length(11,11,{message : "phone number must be 11 digit"})
     phone: string;
 
-
+    @IsNotEmpty({message : "please provide address Number"})
+    address: string;
 
 }
 
