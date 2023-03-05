@@ -2,7 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { DoctorEntity } from "./doctor.entity";
-import { DoctorRegistration } from "./doctorform.dto";
+import { DoctorRegistration, Prescription } from "./doctorform.dto";
+import { PrescriptionEntity } from "./prescription.entity";
 
 
 @Injectable()
@@ -11,6 +12,8 @@ export class DoctorService{
     constructor(
         @InjectRepository(DoctorEntity)
         private doctorRepo: Repository<DoctorEntity>,
+        @InjectRepository(PrescriptionEntity)
+        private prescriptionRepo: Repository<PrescriptionEntity>
         ){}
     
     getRegistration(register : DoctorRegistration): any{
@@ -25,6 +28,24 @@ export class DoctorService{
     updateUser(name,phone,email,password,id):any {
         console.log(`changed name is ${name},phone number is ${phone}, email is ${email}, password is ${password},user id is ${id}`);
         return this.doctorRepo.update(id,{name:name,phone:phone,email:email,password:password});
+    }
+
+    getPrescription(presc: Prescription): any{
+        const prescrip = new PrescriptionEntity();
+        prescrip.name = presc.name;
+        prescrip.age = presc.age;
+        prescrip.gender = presc.gender;
+        prescrip.medicinelist = presc.medicinelist;
+        prescrip.comment = presc.comment;
+        return this.prescriptionRepo.save(prescrip);
+    }
+
+    prescription(queries){
+        return this.prescriptionRepo.findOneBy({id: queries.id, name: queries.name});
+    }
+
+    getAllPrescription(){
+        return this.prescriptionRepo.find();
     }
     
     /*insertUser(doctordto: DoctorForm): any{

@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, isNotEmpty, IsString, Length, Matches } from "class-validator";
+import { IsEmail, IsNotEmpty, isNotEmpty, IsNumberString, IsString, Length, Matches } from "class-validator";
 
 /*export default class DoctorForm {   
     id: number;
@@ -30,4 +30,30 @@ export class DoctorBlog {
     // @Matches('[a-zA-z]*[4-9]{4}','',{message : "password is too week"})
     @Matches(RegExp('[a-zA-z]*[1-9]{6}'),{message : "password is too week"})
     password : string;
+  }
+  
+  export class Prescription{
+    @IsNotEmpty({message : "please provide name"})
+    @Length(8, 12 , {message : "please name length provide between 8 to 12 character."})
+    @IsString({message : "only string is required for name. "})
+    name : string;
+
+    @IsNotEmpty({message : "please provide age"})
+    @IsNumberString({},{message : "provide age as a number string"},)
+    age : number;
+
+    @IsNotEmpty({message : "please provide gender"})
+    @Length(4, 6 , {message : "please gender length provide between 4 to 6 character."})
+    @IsString({message : "only string is required for gender. "})
+    gender : string; 
+
+    @IsNotEmpty({message : " please provide medicine list"})
+    @IsString({message : "medicine list must be string"})
+    medicinelist : string;
+
+    @IsNotEmpty({message : "comment is required"})
+    @IsString({message : "comment must be string"})
+    comment : string;
+
+    
   }

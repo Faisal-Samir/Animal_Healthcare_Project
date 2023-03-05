@@ -13,6 +13,8 @@ import { AdaptionEntity } from "./Customer/adaption.entity";
 import { AppointmentEntity } from "./Customer/appointment.entity";
 import { BlogEntity } from "./Customer/blog.entity";
 import { EmergencyHelpEntity } from "./Customer/emergencyHelp.entity";
+import { DoctorEntity } from "./Doctor/doctor.entity";
+import { PrescriptionEntity } from "./Doctor/prescription.entity";
 
 
 @Module({
@@ -23,7 +25,7 @@ import { EmergencyHelpEntity } from "./Customer/emergencyHelp.entity";
         username: 'postgres',
         password: 'samir2022',
         database: 'Animal_Care',
-        entities: [CustomerEntity,AdaptionEntity,AppointmentEntity,BlogEntity,EmergencyHelpEntity],
+        entities: [CustomerEntity,AdaptionEntity,AppointmentEntity,BlogEntity,EmergencyHelpEntity,DoctorEntity,PrescriptionEntity],
         synchronize: true,
       }),DoctorModule,CustomerModule,AdminModule,PetShopperModule,],
 })

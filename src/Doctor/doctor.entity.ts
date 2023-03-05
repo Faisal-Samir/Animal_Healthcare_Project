@@ -3,17 +3,17 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity('Doctor')
 export class DoctorEntity{
     @Column()
-    name : string;
+    name : string
 
     @PrimaryGeneratedColumn()
-    id : number;
+    id : number
 
     @Column()
-    phone : string;
+    phone : string
 
     @Column()
-    email : string;
+    email : string
 
     @Column()
-    password : string;
+    password : string
 }
