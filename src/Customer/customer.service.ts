@@ -8,6 +8,7 @@ import { BlogEntity } from "./blog.entity";
 import { CustomerEntity } from "./customer.entity";
 import { CustomerImageUpload, CustomerRegistration , CustomerUpdate, CustomerUploadedAnimalImage} from "./customerform.dto";
 import { EmergencyHelpEntity } from "./emergencyHelp.entity";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class CustomerService{
@@ -24,11 +25,15 @@ export class CustomerService{
         @InjectRepository(EmergencyHelpEntity)
         private emergencyHelpRepo : Repository<EmergencyHelpEntity>,
       ) {}
-    getRegistration(register : CustomerRegistration): any{
+    async getRegistration(register : CustomerRegistration){
         const customerAccount = new CustomerEntity();
         customerAccount.name = register.name;
         customerAccount.email = register.email;
         customerAccount.phone = register.phone;
+        const salt = await bcrypt.genSalt();
+        const hassPassword = await bcrypt.hash(register.password,salt)
+        register.password = hassPassword;
+        customerAccount.password = register.password;
         customerAccount.password = register.password;
         customerAccount.gender = register.gender;
         customerAccount.address = register.address;
