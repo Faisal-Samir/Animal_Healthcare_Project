@@ -1,6 +1,7 @@
 import { Controller, Post, Put, Get, Body, Query, Delete, Param, UsePipes, ValidationPipe } from "@nestjs/common";
+import { get } from "http";
 import { DoctorService } from "./doctor.service";
-import { DoctorRegistration } from "./doctorform.dto";
+import { DoctorRegistration, Prescription } from "./doctorform.dto";
 
 @Controller("/doctor")
 export class DoctorController
@@ -19,6 +20,21 @@ export class DoctorController
             return this.doctorService.updateUser(name,id,phone,email,password);
         }
     
+    @Post("/prescription")
+    @UsePipes(new ValidationPipe())
+    getPrescription(@Body() presc : Prescription){
+        return this.doctorService.getPrescription(presc);
+    }
+
+    @Get("/getPrescription")
+    prescription(@Query() queries : Prescription): any{
+        return this.doctorService.prescription(queries);
+    }
+
+    @Get("/allPrescription")
+    getAllPrescription(){
+        return this.doctorService.getAllPrescription();
+    }
     
     /*@Post('/insertuser')//route 2
         insertUser(@Body() doctordto: DoctorForm): any {
