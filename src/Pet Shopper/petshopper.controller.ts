@@ -9,7 +9,7 @@ export class PetShopperController
 { 
   constructor(private petshopperservicec: PetShopperService){}
 
-  @Post("/registration")
+  @Post("/registration")//route 10
   @UsePipes(new ValidationPipe())
   getRegistration(@Body() register : petshopperregistration):any{
       return this.petshopperservicec.getRegistration(register);
@@ -31,8 +31,8 @@ export class PetShopperController
   }
 
   @Put('/updateuser/:id') //route 4
-  updateuserbyid(@Body('name') name: string,@Body('email') email:string,@Body('address') address:string,@Body('password')password:string, @Param('id') id: number,): any {
-    return this.petshopperservicec.updateuser(name, id,email,address,password);
+  updateuserbyid(@Body('name') name: string,@Body('email') email:string,@Body('password')password:string, @Param('id') id: number,): any {
+    return this.petshopperservicec.updateuser(name,id,email,password);
   }
   @Delete('/deleteuser/:id') //route 5
   deleteuser(@Body('name')name: string,@Param('id')id:number,):any{
@@ -45,13 +45,14 @@ export class PetShopperController
   @Post('/medicinelist/:id')//route 7
   medicinelist(@Query()qry:any):any {
     return this.petshopperservicec.medicinelist(qry);
+
   }@Post('/foodlist/:id')//route 8
   foodlist(@Query()qry:any):any {
     return this.petshopperservicec.foodlist(qry);
   }
   @Post('/elementslist/:id')//route 9
   elementslist(@Query()qry:any):any {
-    return this.petshopperservicec.medicinelist(qry);
+    return this.petshopperservicec.elementslist(qry);
   }
   @Post('/postblog/:id')//route 10
   @UsePipes(new ValidationPipe())
@@ -63,14 +64,14 @@ export class PetShopperController
     return this.petshopperservicec.postblog(qry);
   
 }
-@Post('/postinfo/:id')//route 11
+@Post('/postinfo/:id')//route 12
 postinfo(@Query()qry:any):any {
   return this.petshopperservicec.postblog(qry);
 
 }
-@Delete('/delteblog/:id')//route 12
-  delteblog(@Query()qry:any):any {
-    return this.petshopperservicec.postinfo(qry);
+@Delete('/delteblog/:id')//route 13
+  deleteblog(@Query()qry:any):any {
+    return this.petshopperservicec.deleteblog(qry);
   
 }
 

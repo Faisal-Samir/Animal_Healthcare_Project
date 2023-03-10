@@ -26,8 +26,8 @@ export class petshopperregistration{
     @Length(11,11,{message : "phone number must be 11 digit"})
     phone: string;
 
-    @IsNotEmpty({message : "please provide address Number"})
-    address: string;
+    // @IsNotEmpty({message : "please provide address Number"})
+    // address: string;
 
 }
 
@@ -44,15 +44,10 @@ export class Petshopperinsert{
     @IsString({message:"Password will be string"})
     password:string;
 
-    @IsNotEmpty({message : "Provide Address"})
-    @IsString({message : "Address will be string "})
-    address : string;
+    // @IsNotEmpty({message : "Provide Address"})
+    // @IsString({message : "Address will be string "})
+    // address : string;
 }
-
-
-
-
-
 export class PetShopperForm {   
     id: number;
     name: string;
@@ -68,3 +63,12 @@ export class PetshopperBlog {
     title: string;
     description: string;
   }
+
+  
+export class PetshopperProduct {
+    //For Name Validation
+    @IsNotEmpty({message : "Please Enter the Name"})
+    @IsString({message : "Put the List "})
+
+    name : string;
+}
