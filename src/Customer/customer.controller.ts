@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query, Delete, ParseIntPipe, UsePipes, ValidationPipe, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, UseInterceptors, Session } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Query, Delete, ParseIntPipe, UsePipes, ValidationPipe, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, UseInterceptors, Session, UnauthorizedException } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
 import { CustomerService } from "./customer.service";
@@ -130,7 +130,17 @@ export class CustomerController{
         uploadDto.file = image.filename;
         return this.customerService.emergencyHelp(uploadDto);
     }
-    // finish
+
+    // logout
+    @Get('/logout')
+    getLogout(@Session() session){
+        if(session.destroy()){
+            return {message: 'Log out done'};
+        }
+        else{
+            throw new UnauthorizedException("invalid actions");
+        }
+    }
 
     
 }
