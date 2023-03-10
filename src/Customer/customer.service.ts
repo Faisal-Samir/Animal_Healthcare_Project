@@ -3,8 +3,11 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { AdaptionEntity } from "./adaption.entity";
 import { AppointmentEntity} from "./appointment.entity";
+import { BlogEntity } from "./blog.entity";
 import { CustomerEntity } from "./customer.entity";
-import { CustomerRegistration , CustomerUpdate, CustomerUploadedAnimalImage} from "./customerform.dto";
+import { CustomerImageUpload, CustomerRegistration , CustomerUpdate, CustomerUploadedAnimalImage} from "./customerform.dto";
+import { EmergencyHelpEntity } from "./emergencyHelp.entity";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class CustomerService{
@@ -16,12 +19,20 @@ export class CustomerService{
         private adaptionRepo : Repository<AdaptionEntity>,
         @InjectRepository(AppointmentEntity)
         private appointmentRepo : Repository<AppointmentEntity>,
+        @InjectRepository(BlogEntity)
+        private blogRepo : Repository<BlogEntity>,
+        @InjectRepository(EmergencyHelpEntity)
+        private emergencyHelpRepo : Repository<EmergencyHelpEntity>,
       ) {}
-    getRegistration(register : CustomerRegistration): any{
+    async getRegistration(register : CustomerRegistration){
         const customerAccount = new CustomerEntity();
         customerAccount.name = register.name;
         customerAccount.email = register.email;
         customerAccount.phone = register.phone;
+        const salt = await bcrypt.genSalt();
+        const hassPassword = await bcrypt.hash(register.password,salt)
+        register.password = hassPassword;
+        customerAccount.password = register.password;
         customerAccount.password = register.password;
         customerAccount.gender = register.gender;
         customerAccount.address = register.address;
@@ -29,10 +40,28 @@ export class CustomerService{
         customerAccount.division = register.division;
         return this.customerRepo.save(customerAccount);
     }
+
+    // login
+    async login(mydto) {
+        const customer = await this.customerRepo.findOneBy({ email: mydto.email });
+        if (!customer) {
+          // If customer is not found, return error code
+          return { success: false, message: "Email address not found" };
+        }
+      
+        const isMatched = await bcrypt.compare(mydto.password, customer.password);
+        if (isMatched) {
+            console.log(customer.password);
+          // If password matches, return success code and customer object
+          return { success: true, customer: customer };
+        } else {
+          // If password does not match, return error code
+          return { success: false, message: "Invalid password" };
+        }
+      }
     
-    updateUser(name,id,email,password,address,city,division):any {
-        console.log(`changed name is ${name}, email is ${email}, password is ${password}, address is ${address} and city is ${city} user id is ${id}`);
-        return this.customerRepo.update(id,{name:name,email:email,password:password,address:address,city:city,division:division});
+    updateUserById(myDto:CustomerRegistration,id:number):any {
+        return this.customerRepo.update(id,myDto);
     }
 
     insertImage(adaption):any{
@@ -68,20 +97,36 @@ export class CustomerService{
         return this.appointmentRepo.find();
     }
 
-    blogWriting():string{
-        return "Blog upload successfully";
+    updateAppointment(id,appointmentDto):any{
+        return this.appointmentRepo.update(id,appointmentDto);
     }
 
-    updateBlog(){
-        return "Blog Updated";
+    blogWriting(blog):any{
+        const blogWriting = new BlogEntity();
+        blogWriting.title = blog.title;
+        blogWriting.description = blog.description;
+        return this.blogRepo.save(blogWriting);
+    }
+    getBlog(){
+        return this.blogRepo.find();
     }
 
-    deleteById(id){
-        return `delete blog which id is ${id}`;
+    findBlogById(id){
+        return this.blogRepo.findOneBy({id});
+    }
+
+    updateBlog(id,blogDto):any{
+        return this.blogRepo.update(id,blogDto);
     }
 
     deleteBlogById(id)
     {
-        return `blog delete id as ${id}`;
-    }   
+        return this.blogRepo.delete(id);
+    } 
+
+    emergencyHelp(ImageUpload:CustomerImageUpload){
+        return this.emergencyHelpRepo.save(ImageUpload);
+    }
+    
+    
 }

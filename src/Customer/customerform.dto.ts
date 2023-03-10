@@ -17,7 +17,7 @@ export class CustomerRegistration{
     @IsNotEmpty({message : "please provide password"})
     @IsString({message : "password will be string "})
     // @Matches('[a-zA-z]*[4-9]{4}','',{message : "password is too week"})
-    @Matches(RegExp('[a-zA-z]*[1-9]{6}'),{message : "password is too week"})
+    @Matches(RegExp('[a-zA-z]*[0-9]{6}'),{message : "password is too week"})
     password : string;
 
     @IsNotEmpty({message : "please provide gender"})
@@ -133,4 +133,9 @@ export class CustomerBlog{
     @IsString({message : "Blog description must be string"})
     description : string;
 }
-// all done without database
+
+export class CustomerImageUpload{
+    file : string
+    problem : string;
+    problemDuration : string;
+}
