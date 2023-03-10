@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query, Delete, ParseIntPipe, UsePipes, ValidationPipe, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Query, Delete, ParseIntPipe, UsePipes, ValidationPipe, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, UseInterceptors, Session } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
 import { CustomerService } from "./customer.service";
@@ -16,6 +16,20 @@ export class CustomerController{
         return this.customerService.getRegistration(register);
     }
 
+    // login
+    @Get('/login')
+    async login(@Session() session, @Body() mydto : CustomerRegistration){
+        const loginResult = await this.customerService.login(mydto);
+        if(loginResult.success){
+            session.email = mydto.email;
+            console.log(session.email);
+            return {message : 'Successfully login' };
+        }
+        else{
+            return {message : 'invalid credentials' };
+        }
+    }
+    
 
     // update Customer profile by it's name route-2
     @Put("/updateCustomer/:id")

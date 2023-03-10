@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { title } from "process";
 import { Repository } from "typeorm";
 import { AdaptionEntity } from "./adaption.entity";
 import { AppointmentEntity} from "./appointment.entity";
@@ -41,6 +40,24 @@ export class CustomerService{
         customerAccount.division = register.division;
         return this.customerRepo.save(customerAccount);
     }
+
+    // login
+    async login(mydto) {
+        const customer = await this.customerRepo.findOneBy({ email: mydto.email });
+        if (!customer) {
+          // If customer is not found, return error code
+          return { success: false, message: "Email address not found" };
+        }
+      
+        const isMatched = await bcrypt.compare(mydto.password, customer.password);
+        if (isMatched) {
+          // If password matches, return success code and customer object
+          return { success: true, customer: customer };
+        } else {
+          // If password does not match, return error code
+          return { success: false, message: "Invalid password" };
+        }
+      }
     
     updateUserById(myDto:CustomerRegistration,id:number):any {
         return this.customerRepo.update(id,myDto);
@@ -109,5 +126,6 @@ export class CustomerService{
     emergencyHelp(ImageUpload:CustomerImageUpload){
         return this.emergencyHelpRepo.save(ImageUpload);
     }
+    
     
 }
