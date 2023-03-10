@@ -51,6 +51,7 @@ export class CustomerService{
       
         const isMatched = await bcrypt.compare(mydto.password, customer.password);
         if (isMatched) {
+            console.log(customer.password);
           // If password matches, return success code and customer object
           return { success: true, customer: customer };
         } else {
