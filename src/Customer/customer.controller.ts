@@ -4,13 +4,12 @@ import { diskStorage } from "multer";
 import { CustomerService } from "./customer.service";
 import { CustomerRegistration, CustomerUploadedAnimalImage, CustomerAppointment, CustomerBlog, CustomerImageUpload } from "./customerform.dto";
 
-<<<<<<< HEAD
 let CustomerUploadedImage =[];
 let AppointmentList = [];
 let Blogs = [];
-=======
 
->>>>>>> eb65c941315c28783d5264027b7e37d94e2d6903
+
+// >>>>>>> eb65c941315c28783d5264027b7e37d94e2d6903
 @Controller("/customer")
 export class CustomerController{
     constructor (private customerService : CustomerService){}
