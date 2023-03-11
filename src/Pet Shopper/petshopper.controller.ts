@@ -1,4 +1,5 @@
-import {Controller,Get,Post,Body,Param,Put, Query,Delete, UsePipes, ValidationPipe} from "@nestjs/common";
+import {Controller,Get,Post,Body,Param,Put, Query,Delete, UsePipes, ValidationPipe, Session, UnauthorizedException} from "@nestjs/common";
+import { IsPhoneNumber } from "class-validator";
 import { PetShopperService } from "./petshopper.service";
 import {PetshopperBlog, PetShopperForm, petshopperregistration} from "./petshopperform.dto";
 
@@ -19,6 +20,8 @@ export class PetShopperController
     getAdmin(): any { 
         return this.petshopperservicec.getIndex();
     }
+
+    
    
    @Post('/insertuser')//route 2
   insertUser(@Body() petshopperdto: PetShopperForm): any {
@@ -31,8 +34,8 @@ export class PetShopperController
   }
 
   @Put('/updateuser/:id') //route 4
-  updateuserbyid(@Body('name') name: string,@Body('email') email:string,@Body('password')password:string, @Param('id') id: number,): any {
-    return this.petshopperservicec.updateuser(name,id,email,password);
+  updateuserbyid(@Body('name') name: string,@Body('email') email:string,@Body('password')password:string, @Param('id') id: number,@Body('phone') phone:number): any {
+    return this.petshopperservicec.updateuser(id,name,email,password,phone,);
   }
   @Delete('/deleteuser/:id') //route 5
   deleteuser(@Body('name')name: string,@Param('id')id:number,):any{
@@ -73,6 +76,15 @@ postinfo(@Query()qry:any):any {
   deleteblog(@Query()qry:any):any {
     return this.petshopperservicec.deleteblog(qry);
   
+}
+@Get('/logout')
+getLogout(@Session() session){
+    if(session.destroy()){
+        return {message: 'Logout Successfully'};
+    }
+    else{
+        throw new UnauthorizedException("invalid actions");
+    }
 }
 
 }

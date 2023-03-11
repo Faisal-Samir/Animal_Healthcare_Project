@@ -10,6 +10,12 @@ import { PetShopperForm, petshopperregistration,PetshopperBlog } from "./petshop
 
 @Injectable()
 export class PetShopperService {
+  updateuser(id: number, name: string, email: string, password: string, phone: number): any {
+    throw new Error("Method not implemented.");
+  }
+  insertImage(adaption: petshopperregistration): any {
+    throw new Error("Method not implemented.");
+  }
   blogwriting(): string {
     throw new Error("Method not implemented.");
   }
@@ -23,8 +29,10 @@ export class PetShopperService {
   getRegistration(register : petshopperregistration): any{
     const petshopperAccount = new PetshopperEntity();
     petshopperAccount.name = register.name;
+    petshopperAccount.email=register.email;
     petshopperAccount.phone = register.phone;
     petshopperAccount.password = register.password;
+   
   return this.petshopper.save (petshopperAccount);
 
   }
@@ -37,10 +45,8 @@ insertUser(petshopperdto: PetShopperForm): any{
 getuserbyid(petshopperdto: PetShopperForm): any{
   return 'Pet shopper Get name: ' + petshopperdto.name + ' and id is ' + petshopperdto.id;
 }
-updateuser(name: string, id: number,email:string,password:string): any {
-  console.log(`changed name is ${name},email is ${email},password is ${password},`);
-  //console.log( 'Post products name : '+name + 'and id is '+id);
-  return this.petshopper.save(id,name,email,password);
+updateUserById(myDto:petshopperregistration,id:number):any {
+  return this.petshopper.update(id,myDto);
 }
 deleteuser(name:string,id:number):any {
   

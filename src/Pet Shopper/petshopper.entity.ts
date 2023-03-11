@@ -15,10 +15,6 @@ export class PetshopperEntity{
 
     @Column()
     password : string;
-<<<<<<< HEAD
+  email: any;
 
-    
- 
-=======
->>>>>>> eb65c941315c28783d5264027b7e37d94e2d6903
 }
