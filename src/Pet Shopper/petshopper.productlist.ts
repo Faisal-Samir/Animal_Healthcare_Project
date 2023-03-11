@@ -1,20 +1,13 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
-@Entity('Petshopper')
-export class PetshopperEntity{
+@Entity('Products')
+export class PetshopperProductEntity{
     @Column()
     name : string;
 
     @PrimaryGeneratedColumn()
     id : number;
 
-
-    @Column()
-    phone : string;
-
-    @Column()
-    password : string;
-  email: any;
-
+   
 }

@@ -1,4 +1,5 @@
-import {Controller,Get,Post,Body,Param,Put, Query,Delete, UsePipes, ValidationPipe} from "@nestjs/common";
+import {Controller,Get,Post,Body,Param,Put, Query,Delete, UsePipes, ValidationPipe, Session, UnauthorizedException} from "@nestjs/common";
+import { IsPhoneNumber } from "class-validator";
 import { PetShopperService } from "./petshopper.service";
 import {PetshopperBlog, PetShopperForm, petshopperregistration} from "./petshopperform.dto";
 
@@ -9,7 +10,7 @@ export class PetShopperController
 { 
   constructor(private petshopperservicec: PetShopperService){}
 
-  @Post("/registration")
+  @Post("/registration")//route 10
   @UsePipes(new ValidationPipe())
   getRegistration(@Body() register : petshopperregistration):any{
       return this.petshopperservicec.getRegistration(register);
@@ -19,6 +20,8 @@ export class PetShopperController
     getAdmin(): any { 
         return this.petshopperservicec.getIndex();
     }
+
+    
    
    @Post('/insertuser')//route 2
   insertUser(@Body() petshopperdto: PetShopperForm): any {
@@ -31,8 +34,8 @@ export class PetShopperController
   }
 
   @Put('/updateuser/:id') //route 4
-  updateuserbyid(@Body('name') name: string,@Body('email') email:string,@Body('address') address:string,@Body('password')password:string, @Param('id') id: number,): any {
-    return this.petshopperservicec.updateuser(name, id,email,address,password);
+  updateuserbyid(@Body('name') name: string,@Body('email') email:string,@Body('password')password:string, @Param('id') id: number,@Body('phone') phone:number): any {
+    return this.petshopperservicec.updateuser(id,name,email,password,phone,);
   }
   @Delete('/deleteuser/:id') //route 5
   deleteuser(@Body('name')name: string,@Param('id')id:number,):any{
@@ -42,16 +45,17 @@ export class PetShopperController
   postproducts(@Body('name')name: string,@Param('id') id: number,):any{
     return this.petshopperservicec.postproducts(name,id);
   }
-  @Get('/medicinelist/:id')//route 7
+  @Post('/medicinelist/:id')//route 7
   medicinelist(@Query()qry:any):any {
     return this.petshopperservicec.medicinelist(qry);
-  }@Get('/foodlist/:id')//route 8
+
+  }@Post('/foodlist/:id')//route 8
   foodlist(@Query()qry:any):any {
     return this.petshopperservicec.foodlist(qry);
   }
-  @Get('/elementslist/:id')//route 9
+  @Post('/elementslist/:id')//route 9
   elementslist(@Query()qry:any):any {
-    return this.petshopperservicec.medicinelist(qry);
+    return this.petshopperservicec.elementslist(qry);
   }
   @Post('/postblog/:id')//route 10
   @UsePipes(new ValidationPipe())
@@ -63,15 +67,24 @@ export class PetShopperController
     return this.petshopperservicec.postblog(qry);
   
 }
-@Post('/postinfo/:id')//route 11
+@Post('/postinfo/:id')//route 12
 postinfo(@Query()qry:any):any {
   return this.petshopperservicec.postblog(qry);
 
 }
-@Delete('/delteblog/:id')//route 12
-  delteblog(@Query()qry:any):any {
-    return this.petshopperservicec.postinfo(qry);
+@Delete('/delteblog/:id')//route 13
+  deleteblog(@Query()qry:any):any {
+    return this.petshopperservicec.deleteblog(qry);
   
+}
+@Get('/logout')
+getLogout(@Session() session){
+    if(session.destroy()){
+        return {message: 'Logout Successfully'};
+    }
+    else{
+        throw new UnauthorizedException("invalid actions");
+    }
 }
 
 }
