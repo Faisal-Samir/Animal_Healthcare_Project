@@ -166,4 +166,9 @@ export class CustomerController{
             throw new UnauthorizedException("invalid actions");
         }
     }
+
+    @Post('/sendemail')
+    sendEmail(@Body() mydata){
+        return this.customerService.sendEmail(mydata);
+    }
 }
