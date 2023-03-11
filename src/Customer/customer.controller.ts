@@ -130,7 +130,7 @@ export class CustomerController{
     @UseGuards(SessionGuard)
     @UseInterceptors(FileInterceptor('image',
     {storage:diskStorage({
-        destination: '../HelpImage',
+        destination: './HelpImage',
         filename : function(_req,file, cb){
             cb(null,Date.now()+file.originalname)
         }
