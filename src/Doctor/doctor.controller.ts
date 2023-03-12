@@ -1,19 +1,42 @@
-import { Controller, Post, Put, Get, Body, Query, Delete, Param } from "@nestjs/common";
-//import { Get } from "@nestjs/common/decorators";
+import { Controller, Post, Put, Get, Body, Query, Delete, Param, UsePipes, ValidationPipe } from "@nestjs/common";
+import { get } from "http";
 import { DoctorService } from "./doctor.service";
-import DoctorForm from "./doctorform.dto";
+import { DoctorRegistration, Prescription } from "./doctorform.dto";
 
 @Controller("/doctor")
 export class DoctorController
 {
     constructor( private doctorService: DoctorService ){}
 
-    @Get("/index")//route 1
-        getDoctor(): any{
-        return this.doctorService.getIndex();
+    @Post("/registration")//route 1
+    @UsePipes(new ValidationPipe())
+    getRegistration(@Body() register : DoctorRegistration): any{
+        return this.doctorService.getRegistration(register);
     }
     
-    @Post('/insertuser')//route 2
+    @Put("/updateDoctor")
+    updateUser(
+        @Body("name") name:DoctorRegistration, @Body("phone") phone:DoctorRegistration, @Body("email") email:DoctorRegistration, @Body("password") password:DoctorRegistration, @Body('id') id: number): any {
+            return this.doctorService.updateUser(name,id,phone,email,password);
+        }
+    
+    @Post("/prescription")
+    @UsePipes(new ValidationPipe())
+    getPrescription(@Body() presc : Prescription){
+        return this.doctorService.getPrescription(presc);
+    }
+
+    @Get("/getPrescription")
+    prescription(@Query() queries : Prescription): any{
+        return this.doctorService.prescription(queries);
+    }
+
+    @Get("/allPrescription")
+    getAllPrescription(){
+        return this.doctorService.getAllPrescription();
+    }
+    
+    /*@Post('/insertuser')//route 2
         insertUser(@Body() doctordto: DoctorForm): any {
         return this.doctorService.insertUser(doctordto);
     }
@@ -30,8 +53,6 @@ export class DoctorController
     @Delete('/deleteuser/:id') //route 5
         deleteuser(@Body('name')name: string,@Param('id')id:number,):any{
         return this.doctorService.deleteuser(name,id);
-    }
+    }*/
     
-
-
 }
