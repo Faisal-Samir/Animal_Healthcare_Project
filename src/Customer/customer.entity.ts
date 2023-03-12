@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { AdminEntity } from 'src/admin/admin.entity';
 
 
 @Entity('Customer')
@@ -29,4 +30,8 @@ export class CustomerEntity{
 
     @Column()
     division : string;
+
+
+    // @ManyToOne(() => AdminEntity, (admin) => admin.customer)  //change
+    // admin: AdminEntity
 }

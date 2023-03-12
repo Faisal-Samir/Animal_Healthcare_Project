@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Param, Post, Put, Query, Delete, ParseIntPipe, UsePipes, ValidationPipe } from "@nestjs/common";
+import { AdminService } from "src/Admin/adminservice.service";//change
 import { CustomerService } from "./customer.service";
 import { CustomerRegistration, CustomerUpdate, CustomerUploadedAnimalImage, CustomerAppointment, CustomerBlog } from "./customerform.dto";
 
@@ -7,7 +8,15 @@ let AppointmentList = [];
 let Blogs = [];
 @Controller("/customer")
 export class CustomerController{
-    constructor (private customerService : CustomerService){}
+    constructor (private customerService : CustomerService,
+       // private adminService: AdminService  //change
+        
+        )
+    
+    
+    
+    
+    {}
 
     // registration purpose route-1 using database
     @Post("/registration")

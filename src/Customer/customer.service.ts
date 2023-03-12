@@ -8,6 +8,7 @@ import { CustomerRegistration , CustomerUpdate, CustomerUploadedAnimalImage} fro
 
 @Injectable()
 export class CustomerService{
+  
 
     constructor(
         @InjectRepository(CustomerEntity)
@@ -84,4 +85,36 @@ export class CustomerService{
     {
         return `blog delete id as ${id}`;
     }   
+
+
+
+
+//----------------------Admin and customer relation done by(Siam)------------------////////////
+
+// getAdminByCustomerID(id):any {                   //change
+//     return this.customerRepo.find({ 
+//              where: {id:id},
+//          relations: {
+//             admin: true,
+//          },
+//       });
+//  }
+
+
+
+// deleteCustomerbyid(id):any {
+ 
+//  return this.customerRepo.delete(id);
+// }
+
+
+// adminUpdateCustomerbyid(customerdto:CustomerUpdate,id):any {
+//  return this.customerRepo.update(id,customerdto);
+//     }
+
+  
+//----------------------------------End-------------------------//
+
+
+    
 }

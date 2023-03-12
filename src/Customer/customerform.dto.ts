@@ -17,7 +17,7 @@ export class CustomerRegistration{
     @IsNotEmpty({message : "please provide password"})
     @IsString({message : "password will be string "})
     // @Matches('[a-zA-z]*[4-9]{4}','',{message : "password is too week"})
-    @Matches(RegExp('[a-zA-z]*[1-9]{6}'),{message : "password is too week"})
+   // @Matches(RegExp('[a-zA-z]*[1-9]{6}'),{message : "password is too week"})
     password : string;
 
     @IsNotEmpty({message : "please provide gender"})
@@ -35,6 +35,8 @@ export class CustomerRegistration{
     @IsNotEmpty({message : "please provide Division"})
     @IsString({message : "Division will be string "})
     division : string; 
+
+    adminid:number;
 }
 
 export class CustomerUpdate{

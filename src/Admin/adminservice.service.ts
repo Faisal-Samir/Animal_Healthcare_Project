@@ -1,117 +1,114 @@
 import { Injectable } from "@nestjs/common";
-import {
-    AdminLogin,
-    DoctorID,DoctorName,InsertDoctor, UpdateDoctor,UpdateDoctorID,DeleteDoctor,
-    CustomerID,CustomerName,InsertCustomer, UpdateCustomer,UpdateCustomerID,DeleteCustomer
-
-} from "./adminform.dto"
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AdminEntity } from "./admin.entity";
+import { AdminForm } from "./adminform.dto";
+import { AdminFormUpdate } from "./adminformupdate.dto";
+import * as bcrypt from 'bcrypt';       //add
+//import { MailerService } from "@nestjs-modules/mailer/dist";//add
 
 @Injectable()
+export class AdminService {
+    constructor(
+        @InjectRepository(AdminEntity)
+        private adminRepo: Repository<AdminEntity>,
+        //private mailerService: MailerService
+      ) {}
 
-export class AdminService{
 
 
-//--------------------------------------For Admin------------------------------//
-getIndex():string{
-    return "Admin Index";
+      async getRegistration(register:AdminForm){
+        const adminAccount = new AdminEntity();
+        adminAccount.name = register.name;
+        adminAccount.email = register.email;
 
- }
+        const salt = await bcrypt.genSalt();
+        const hassPassword = await bcrypt.hash(register.password,salt)
+        register.password = hassPassword;
+        adminAccount.password = register.password;
+        adminAccount.password = register.password;
 
-getLogin(login : AdminLogin): any{
+        adminAccount.address = register.address;
+        
+        return this.adminRepo.save(adminAccount);
+    }
+
+    async login(mydto) {
+        const admin = await this.adminRepo.findOneBy({ email: mydto.email });
+        if (!admin) {
+          
+          return { success: false, message: "Email address not found" };
+        }
+      
+        const isMatched = await bcrypt.compare(mydto.password, admin.password);
+        if (isMatched) {
+            console.log(admin.password);
+          // If password matches, return success code and customer object
+          return { success: true, admin:admin };
+        } else {
+          // If password does not match, return error code
+          return { success: false, message: "Invalid password" };
+        }
+      }
+
+
     
-    return `Login done for id: ${login.id} and Password: ${login.password}`; 
- }
 
- //--------------------------------Admin End---------------------------------------//
+getIndex():any { 
+    return this.adminRepo.find();
 
-
-
-
-
-//-----------------------------------Doctor Start----------------------------------//
-getDoctorByID(doctor : DoctorID):any{
-    return `Here is the details : ${doctor.id}`;
+}
+getUserByID(id):any {
+    return this.adminRepo.findOneBy({ id });
 }
 
+getUserByIDName(qry):any {
+    return this.adminRepo.findOneBy({ id:qry.id,name:qry.name });
+}
 
-getDoctorByName(doctorName : DoctorName):any{
-    return `Doctor name: ${doctorName.id} and her or his id: ${doctorName.name}`; 
+insertUser(mydto:AdminForm):any {
+    const adminaccount = new AdminEntity()
+    adminaccount.name = mydto.name;
+    adminaccount.email = mydto.email;
+    adminaccount.password = mydto.password;
+    adminaccount.address = mydto.address;
+    return this.adminRepo.save(adminaccount);
+
+      }
+
+updateUser(name,id):any {
+    console.log(name+id);
+    return this.adminRepo.update(id,{name:name});
+    }
+
+updateUserbyid(mydto:AdminFormUpdate,id):any {
+    return this.adminRepo.update(id,mydto);
+       }
+       
+deleteUserbyid(id):any {
     
-}
-
-
-getInsertDoctor(insertDoctor:InsertDoctor):any {
+        return this.adminRepo.delete(id);
+    }
     
-    return "Admin Inserted id: " + insertDoctor.id +" and name is: " + insertDoctor.name;
+
+//---------------add
+
+
+   
+//----------------------------------------------------------//
+
+getCustomersByAdminID(id):any {
+    return this.adminRepo.find({ 
+            where: {id:id},
+        relations: {
+            customer: true,
+        },
+     });
 }
 
+   
 
-getDoctorUpdate(updateDoctor:UpdateDoctor):any {
-    return "Admin updated name: " +updateDoctor.name +" and id is " +updateDoctor.id;
-}
-
-
-
-
-
-getDoctorUpdateById(updateDoctorId:UpdateDoctorID):any {
-    return "Update admin where id: " +updateDoctorId.id+" and change name to :" +updateDoctorId.name;
-}
-
-
-
-
-getDeleteDoctorById(deleteDoctor:DeleteDoctor):any{
-    return "Delete Id:" +deleteDoctor.id;
-}
-
-
-//--------------------------------Doctor End----------------------------------//
-
-
-
-//----------------------------------Customer---------------------------------//
-
-getCustomerByID(customer : CustomerID):any{
-    return `Here is the details : ${customer.id}`;
-}
-
-
-getCustomerByName(customerName : CustomerName):any{
-    return `Customer name: ${customerName.id} and her or his id: ${customerName.name}`; 
     
-}
-
-
-getInsertCustomer(insertCustomer:InsertCustomer):any {
-    
-    return "Admin Inserted id: " + insertCustomer.id +" and name is: " + insertCustomer.name;
-}
-
-
-getCustomerUpdate(updateCustomer:UpdateCustomer):any {
-    return "Admin updated name: " +updateCustomer.name +" and id is " +updateCustomer.id;
-}
-
-
-
-getCustomerUpdateById(updateCustomerId:UpdateCustomerID):any {
-    return "Update admin where id: " +updateCustomerId.id+" and change name to :" +updateCustomerId.name;
-}
-
-
-
-
-getDeleteCustomerById(deleteCustomer:DeleteCustomer):any{
-    return "Delete Id:" +deleteCustomer.id;
-}
-
-
-
-//----------------------------------Customer End------------------------------//
-
-
-
 
 
 }

@@ -11,6 +11,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { CustomerEntity } from "./Customer/customer.entity";
 import { AdaptionEntity } from "./Customer/adaption.entity";
 import { AppointmentEntity } from "./Customer/appointment.entity";
+import { AdminEntity } from "./Admin/admin.entity";
 
 
 @Module({
@@ -20,10 +21,14 @@ import { AppointmentEntity } from "./Customer/appointment.entity";
         port: 5432,
         username: 'postgres',
         password: 'samir2022',
-        database: 'Animal_Care',
-        entities: [CustomerEntity,AdaptionEntity,AppointmentEntity],
+        database: 'siam',
+        autoLoadEntities:true,
+      //entities: [CustomerEntity,AdaptionEntity,AppointmentEntity,AdminEntity],
         synchronize: true,
       }),DoctorModule,CustomerModule,AdminModule,PetShopperModule,],
+      controllers:[],
+      providers:[],
+
 })
 export class AppModule {}
 
