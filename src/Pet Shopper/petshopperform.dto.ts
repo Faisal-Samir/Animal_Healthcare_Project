@@ -16,16 +16,22 @@ export class petshopperregistration{
     password : string;
 
     //Name ID validation 
-    /*@IsNotEmpty({message : "Please Enter the Name"})
-    @IsInt({message : "provide id as a integer number"},)
-    @Min(1,{message : "Id must be greater than or equal 1"})
-    id : number;*/
+    // @IsNotEmpty({message : "Please Enter the Name"})
+    // @IsInt({message : "provide id as a integer number"},)
+    // @Min(1,{message : "Id must be greater than or equal 1"})
+    // id : number;
 
     //Phone Number Validation
     @IsNotEmpty({message : "please provide Phone Number"})
     @Length(11,11,{message : "phone number must be 11 digit"})
     phone: string;
-  email: any;
+
+    //email
+    @IsNotEmpty({message : "please provide valid email"})
+    @IsEmail({},{message : "invalid email"})
+      email: string;
+  address: string;
+  district: any;
 
     // @IsNotEmpty({message : "please provide address Number"})
     // address: string;
@@ -50,11 +56,13 @@ export class Petshopperinsert{
     // address : string;
 }
 export class PetShopperForm {   
-    id: number;
+    id:number;
     name: string;
     email: string;
     password : string;
-  filename: string;
+  phone: number;
+  address:string;
+  district:string;
 
 }
 export class PetshopperBlog {
@@ -68,9 +76,21 @@ export class PetshopperBlog {
 
   
 export class PetshopperProduct {
-    //For Name Validation
-    @IsNotEmpty({message : "Please Enter the Name"})
-    @IsString({message : "Put the List "})
-
+    
     name : string;
+    amount:string
+}
+
+export class Medicinelist {
+    
+  name : string;
+  date:string;
+  amount:string;
+}
+
+export class Foodlist {  
+  name : string;
+  date:string;
+  Amount:string;
+  
 }

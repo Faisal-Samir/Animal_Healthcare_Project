@@ -11,11 +11,21 @@ export class PetshopperEntity{
     
     @Column()
     phone : string;
-    @Column()
-   email: string;
+
 
     @Column()
     password : string;
+
+    @Column()
+    address:string;
+
+    @Column()
+    district:string;
+    
+    @Column()
+  email: string;
+
+
 }
    
 

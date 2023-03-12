@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
-@Entity('medicinelist')
+@Entity('Medicinelist')
 export class medicinelistEntity{
 
     @PrimaryGeneratedColumn()
@@ -11,9 +11,9 @@ export class medicinelistEntity{
     name : string;
 
     @Column()
-    date:Date;
+    date:string;
 
     @Column()
-    Amount : number;
+  amount: string;
 
 }
