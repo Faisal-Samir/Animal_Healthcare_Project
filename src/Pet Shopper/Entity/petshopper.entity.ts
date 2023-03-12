@@ -8,14 +8,15 @@ export class PetshopperEntity{
 
     @PrimaryGeneratedColumn()
     id : number;
+    
     @Column()
     phone : string;
+    @Column()
+   email: string;
 
     @Column()
     password : string;
- 
-
-  @Column()
-  email: string;
-
 }
+   
+
+
