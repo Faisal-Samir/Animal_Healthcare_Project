@@ -5,7 +5,16 @@ import { CustomerService } from "./customer.service";
 import { CustomerRegistration, CustomerUploadedAnimalImage, CustomerAppointment, CustomerBlog, CustomerImageUpload } from "./customerform.dto";
 import { SessionGuard } from "./session.gurd";
 
+//<<<<<<< HEAD
+let CustomerUploadedImage =[];
+let AppointmentList = [];
+let Blogs = [];
 
+
+// >>>>>>> eb65c941315c28783d5264027b7e37d94e2d6903
+//=======
+
+//>>>>>>> 3d90ab53cf7eabc2b5da4f62747c64533d9df838
 @Controller("/customer")
 export class CustomerController{
     constructor (private customerService : CustomerService){}
@@ -165,10 +174,5 @@ export class CustomerController{
         {
             throw new UnauthorizedException("invalid actions");
         }
-    }
-
-    @Post('/sendemail')
-    sendEmail(@Body() mydata){
-        return this.customerService.sendEmail(mydata);
     }
 }

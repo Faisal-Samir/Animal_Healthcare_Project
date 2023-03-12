@@ -1,8 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { PetshopperEntity } from "./petshopper.entity";
+import { PetshopperEntity } from "./Entity/petshopper.entity";
 import { PetshopperProductEntity } from "./petshopper.productlist";
+import * as bcrypt from 'bcrypt';
 
 import { PetShopperForm, petshopperregistration,PetshopperBlog } from "./petshopperform.dto";
 
@@ -10,6 +11,7 @@ import { PetShopperForm, petshopperregistration,PetshopperBlog } from "./petshop
 
 @Injectable()
 export class PetShopperService {
+  mailerService: any;
   updateuser(id: number, name: string, email: string, password: string, phone: number): any {
     throw new Error("Method not implemented.");
   }
@@ -81,4 +83,34 @@ postinfo(petshopperdto:PetShopperForm):any{
   return 'Show Info : '+ petshopperdto.name+'and id is'+petshopperdto.id;
 }
 
-}
+async signup(mydto) {
+  const salt = await bcrypt.genSalt();
+  const hassedpassed = await bcrypt.hash(mydto.password, salt);
+  mydto.password= hassedpassed;
+  return this.petshopper.save(mydto);
+  }
+  
+  async signin(mydto){
+      console.log(mydto.password);
+  const mydata= await this.petshopper.findOneBy({email: mydto.email});
+  const isMatch= await bcrypt.compare(mydto.password, mydata.password);
+  if(isMatch) {
+  return 1;
+  }
+  else {
+      return 0;
+  }
+  
+  }
+  
+  async sendEmail(mydata){
+   return   await this.mailerService.sendMail({
+          to: mydata.email,
+          subject: mydata.subject,
+          text: mydata.text, 
+        });
+  
+  }
+  
+  
+  }

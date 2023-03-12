@@ -54,6 +54,7 @@ export class PetShopperForm {
     name: string;
     email: string;
     password : string;
+  filename: string;
 
 }
 export class PetshopperBlog {
