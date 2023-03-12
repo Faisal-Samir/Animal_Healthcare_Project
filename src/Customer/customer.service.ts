@@ -59,6 +59,10 @@ export class CustomerService{
           return { success: false, message: "Invalid password" };
         }
       }
+
+    updateCustomer(mydto,email):any {
+        return this.customerRepo.update({email:email},mydto);
+    }
     
     updateUserById(myDto:CustomerRegistration,id:number):any {
         return this.customerRepo.update(id,myDto);

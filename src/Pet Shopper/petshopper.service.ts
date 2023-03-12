@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { PetshopperEntity } from "./petshopper.entity";
+import { PetshopperEntity } from "./Entity/petshopper.entity";
 import { PetshopperProductEntity } from "./petshopper.productlist";
 
 import { PetShopperForm, petshopperregistration,PetshopperBlog } from "./petshopperform.dto";

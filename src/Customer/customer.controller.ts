@@ -1,15 +1,20 @@
-import { Body, Controller, Get, Param, Post, Put, Query, Delete, ParseIntPipe, UsePipes, ValidationPipe, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, UseInterceptors, Session, UnauthorizedException } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, Query, Delete, ParseIntPipe, UsePipes, ValidationPipe, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, UseInterceptors, Session, UnauthorizedException, UseGuards, Req, Res } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
 import { CustomerService } from "./customer.service";
 import { CustomerRegistration, CustomerUploadedAnimalImage, CustomerAppointment, CustomerBlog, CustomerImageUpload } from "./customerform.dto";
+import { SessionGuard } from "./session.gurd";
 
+//<<<<<<< HEAD
 let CustomerUploadedImage =[];
 let AppointmentList = [];
 let Blogs = [];
 
 
 // >>>>>>> eb65c941315c28783d5264027b7e37d94e2d6903
+//=======
+
+//>>>>>>> 3d90ab53cf7eabc2b5da4f62747c64533d9df838
 @Controller("/customer")
 export class CustomerController{
     constructor (private customerService : CustomerService){}
@@ -35,15 +40,24 @@ export class CustomerController{
         }
     }
     
+    @Put('/updateProfile/')
+    @UseGuards(SessionGuard)
+    @UsePipes(new ValidationPipe())
+    updateCustomer(@Session() session,@Body() mydto: string): any {
+    console.log(session.email);
+    return this.customerService.updateCustomer(mydto, session.email);
+  }
 
     // update Customer profile by it's name route-2
     @Put("/updateCustomer/:id")
+    @UseGuards(SessionGuard)
     updateUserById( 
         @Body() myDto:CustomerRegistration,@Param('id',ParseIntPipe) id: number): any {
           return this.customerService.updateUserById(myDto,id);
     }
     // users animal photo upload to adaption purpose route-3
     @Get("/image")
+    @UseGuards(SessionGuard)
     @UsePipes(new ValidationPipe())
     insertImage(@Body() adaption : CustomerUploadedAnimalImage):any{
         return this.customerService.insertImage(adaption);
@@ -51,11 +65,13 @@ export class CustomerController{
 
     // return all pet animal image means history of adaption list for instant of database store it in an array route-4
     @Get("/getAdaptionItems")
+    @UseGuards(SessionGuard)
     getAllUploadImage(){
         return this.customerService.getAllUploadImage(); 
     }
     // route-5
     @Post("/appointment")
+    @UseGuards(SessionGuard)
     @UsePipes(new ValidationPipe())
     getAppointment(@Body() appointment : CustomerAppointment)
     {
@@ -63,22 +79,26 @@ export class CustomerController{
     }
     // route-6
     @Get("/getAppointment")
+    @UseGuards(SessionGuard)
     appointment(@Query() queries:CustomerAppointment): any{
         return this.customerService.appointment(queries);
     }
     // route-7
     @Get("/allAppointment")
+    @UseGuards(SessionGuard)
     getAllAppointment(){
         return this.customerService.getAllAppointment();
     }
 
     // roue-8
     @Put("/updateAppointment/:id")
+    @UseGuards(SessionGuard)
     updateAppointment(@Param("id",ParseIntPipe)id:number,@Body()appointmentDto : CustomerAppointment){
         return this.customerService.updateAppointment(id,appointmentDto);
     }
     // route-9
     @Post("/blog")
+    @UseGuards(SessionGuard)
     @UsePipes(new ValidationPipe())
     blogWriting(@Body() blog : CustomerBlog):string{
         return this.customerService.blogWriting(blog);
@@ -86,24 +106,28 @@ export class CustomerController{
     // route-10
     // using it customer can see all his/her blog those he/she uploaded
     @Get("/getBlog")
+    @UseGuards(SessionGuard)
     getBlog(){
         return this.customerService.getBlog();
     }
     // route-11
     // user acn search their blog by blog id
     @Get("/getBlog/:id")
+    @UseGuards(SessionGuard)
     findBlogById(@Param("id", ParseIntPipe) id : number){
         return this.customerService.findBlogById(id);
     }
 
     // route-12
     @Put("/updateBlog/:id")
+    @UseGuards(SessionGuard)
     updateBlog(@Param("id", ParseIntPipe) id : number, @Body() blogDto : CustomerBlog){
         return this.customerService.updateBlog(id,blogDto);
     }
 
     // route-13
     @Delete("/deleteBlog/:id")
+    @UseGuards(SessionGuard)
     deleteBlogById(@Param("id", ParseIntPipe) id : number){
         console.log(`deleted blog id is ${id}`)
         return this.customerService.deleteBlogById(id);
@@ -112,9 +136,10 @@ export class CustomerController{
     // route-14
     // upload image to get treatment help for emergency
     @Post("/imageUpload")
+    @UseGuards(SessionGuard)
     @UseInterceptors(FileInterceptor('image',
     {storage:diskStorage({
-        destination: '../HelpImage',
+        destination: './HelpImage',
         filename : function(_req,file, cb){
             cb(null,Date.now()+file.originalname)
         }
@@ -138,14 +163,28 @@ export class CustomerController{
 
     // logout
     @Get('/logout')
-    getLogout(@Session() session){
-        if(session.destroy()){
-            return {message: 'Log out done'};
-        }
-        else{
-            throw new UnauthorizedException("invalid actions");
+    logout(@Session() session){
+        if (session) {
+          session.destroy((err) => {
+            if (err) {
+              throw new UnauthorizedException('Invalid action');
+            }
+          });
+          return { message: 'You have been logged out' };
+        } else {
+          throw new UnauthorizedException('Invalid action');
         }
     }
-
     
+    // logout(@Session() session)
+    // {
+    //     if(session.destroy())
+    //     {
+    //         return {message:"you are logged out"};
+    //     }
+    //     else
+    //     {
+    //         throw new UnauthorizedException("invalid actions");
+    //     }
+    // }
 }

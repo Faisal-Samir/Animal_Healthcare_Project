@@ -25,9 +25,11 @@ import { PrescriptionEntity } from "./Doctor/prescription.entity";
         username: 'postgres',
         password: 'samir2022',
         database: 'Animal_Care',
-        entities: [CustomerEntity,AdaptionEntity,AppointmentEntity,BlogEntity,EmergencyHelpEntity,DoctorEntity,PrescriptionEntity],
+        // entities: [CustomerEntity,AdaptionEntity,AppointmentEntity,BlogEntity,EmergencyHelpEntity,DoctorEntity,PrescriptionEntity],
+        autoLoadEntities: true,
         synchronize: true,
       }),DoctorModule,CustomerModule,AdminModule,PetShopperModule,],
 })
 export class AppModule {}
+
 

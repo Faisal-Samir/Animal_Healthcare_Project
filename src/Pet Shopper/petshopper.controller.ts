@@ -21,8 +21,7 @@ export class PetShopperController
         return this.petshopperservicec.getIndex();
     }
 
-    
-   
+  
    @Post('/insertuser')//route 2
   insertUser(@Body() petshopperdto: PetShopperForm): any {
     return this.petshopperservicec.insertUser(petshopperdto);
@@ -86,5 +85,4 @@ getLogout(@Session() session){
         throw new UnauthorizedException("invalid actions");
     }
 }
-
 }
