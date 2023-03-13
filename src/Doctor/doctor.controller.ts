@@ -36,6 +36,7 @@ export class DoctorController
         return this.doctorService.getAllPrescription();
     }
     
+    
     /*@Post('/insertuser')//route 2
         insertUser(@Body() doctordto: DoctorForm): any {
         return this.doctorService.insertUser(doctordto);

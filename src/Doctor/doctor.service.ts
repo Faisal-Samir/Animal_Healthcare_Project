@@ -2,18 +2,23 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { DoctorEntity } from "./doctor.entity";
-import { DoctorRegistration, Prescription } from "./doctorform.dto";
+import { DoctorRegistration, Prescription, PetImageUpload } from "./doctorform.dto";
 import { PrescriptionEntity } from "./prescription.entity";
+import { MailerService } from "@nestjs-modules/mailer/dist";
+import { PetImageEntity } from "./petimage.entity";
 
 
 @Injectable()
 export class DoctorService{
+    mailerService: any;
 
     constructor(
         @InjectRepository(DoctorEntity)
         private doctorRepo: Repository<DoctorEntity>,
         @InjectRepository(PrescriptionEntity)
-        private prescriptionRepo: Repository<PrescriptionEntity>
+        private prescriptionRepo: Repository<PrescriptionEntity>,
+        @InjectRepository(PetImageEntity)
+        private petRepo: Repository<PetImageEntity>
         ){}
     
     getRegistration(register : DoctorRegistration): any{
@@ -48,17 +53,25 @@ export class DoctorService{
         return this.prescriptionRepo.find();
     }
     
-    /*insertUser(doctordto: DoctorForm): any{
-        return 'Doctor Inserted name: ' + doctordto.name + ' and id is ' + doctordto.id;
+    UpdatePrescription(id, name, age, gender, medicinelist):any{
+        console.log(`Changed name is ${name},Changed age is ${age},Changed gender is ${gender},Changed medicine list is ${medicinelist},${id}`);
+        return this.prescriptionRepo.update(id,{name:name,age:age,gender:gender,medicinelist:medicinelist});
     }
-    getuserbyid(doctordto: DoctorForm): any{
-        return 'Doctor Get name: ' + doctordto.name + ' and id is ' + doctordto.id;
-    }
-    updateuser(name: string, id: number): any {
-        return 'Doctor updated name: ' + name + ' and id is ' + id;
-    }
-    deleteuser(name:string,id:number):any {
-        return 'Doctor Name deleted:'+name + 'and id is'+id;
-    }*/
 
+    deletePrescription(id: number, name:string ):any{
+        return this.prescriptionRepo.delete(id);
+    }
+
+    imageUpload(ImageUpload:PetImageUpload){
+        return this.petRepo.save(ImageUpload);
+    }
+    
+    async sendEmail(mydata){
+        return   await this.mailerService.sendMail({
+               to: mydata.email,
+               subject: mydata.subject,
+               text: mydata.text, 
+             });
+       
+    }
 }
