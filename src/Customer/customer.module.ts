@@ -1,3 +1,4 @@
+import { MailerModule } from "@nestjs-modules/mailer";
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AdaptionEntity } from "./adaption.entity";
@@ -9,7 +10,18 @@ import { CustomerService } from "./customer.service";
 import { EmergencyHelpEntity } from "./emergencyHelp.entity";
 
 @Module({
-    imports : [TypeOrmModule.forFeature([AdaptionEntity,CustomerEntity,AppointmentEntity,BlogEntity,EmergencyHelpEntity])],
+    imports : [ MailerModule.forRoot({
+        transport: {
+          host: 'smtp.gmail.com',
+                   port: 465,
+                   ignoreTLS: true,
+                   secure: true,
+                   auth: {
+                       user: 'samir.faisalaiubcse@gmail.com',
+                       pass: 'eklujsqstzwbpzpw',
+                   },
+                  }
+      }),TypeOrmModule.forFeature([AdaptionEntity,CustomerEntity,AppointmentEntity,BlogEntity,EmergencyHelpEntity])],
     controllers : [CustomerController],
     providers : [CustomerService],
 })

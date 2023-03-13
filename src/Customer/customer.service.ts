@@ -8,13 +8,14 @@ import { CustomerEntity } from "./customer.entity";
 import { CustomerImageUpload, CustomerRegistration , CustomerUpdate, CustomerUploadedAnimalImage} from "./customerform.dto";
 import { EmergencyHelpEntity } from "./emergencyHelp.entity";
 import * as bcrypt from 'bcrypt';
-
+import { MailerService } from "@nestjs-modules/mailer/dist";
 @Injectable()
 export class CustomerService{
 
     constructor(
         @InjectRepository(CustomerEntity)
         private customerRepo: Repository<CustomerEntity>,
+        private mailerService: MailerService,
         @InjectRepository(AdaptionEntity)
         private adaptionRepo : Repository<AdaptionEntity>,
         @InjectRepository(AppointmentEntity)
@@ -132,5 +133,13 @@ export class CustomerService{
         return this.emergencyHelpRepo.save(ImageUpload);
     }
     
+    async sendEmail(mydata){
+        return   await this.mailerService.sendMail({
+               to: mydata.email,
+               subject: mydata.subject,
+               text: mydata.text, 
+             });
+       
+    }
     
 }
