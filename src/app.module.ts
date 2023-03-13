@@ -4,7 +4,6 @@ import { DoctorModule } from "./Doctor/doctor.module";
 
 import { CustomerModule } from "./Customer/customer.module";
 
-import { AdminModule } from "./Admin/adminmodule.module";
 
 import { PetShopperModule } from "./Pet Shopper/petshopper.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
@@ -28,7 +27,7 @@ import { PrescriptionEntity } from "./Doctor/prescription.entity";
         // entities: [CustomerEntity,AdaptionEntity,AppointmentEntity,BlogEntity,EmergencyHelpEntity,DoctorEntity,PrescriptionEntity],
         autoLoadEntities: true,
         synchronize: true,
-      }),DoctorModule,CustomerModule,AdminModule,PetShopperModule,],
+      }),DoctorModule,CustomerModule,PetShopperModule,],
 })
 export class AppModule {}
 
