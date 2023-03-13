@@ -3,11 +3,14 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('Products')
 export class PetshopperProductEntity{
-    @Column()
-    name : string;
 
     @PrimaryGeneratedColumn()
     id : number;
 
+    @Column()
+    name : string;
    
+    @Column()
+    amount : string;
+  date: string;
 }

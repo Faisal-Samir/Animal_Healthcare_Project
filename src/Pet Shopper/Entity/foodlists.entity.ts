@@ -1,16 +1,21 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
-@Entity('toylist')
-export class toylist{
+@Entity('Foodlist')
+export class FoodlistEntity{
 
     @PrimaryGeneratedColumn()
     id : number;
 
     @Column()
     name : string;
-
+    
     @Column()
-    Amount : number;
+  date: string;
+
+  @Column()
+  Amount: string;
+
+    
 
 }

@@ -13,4 +13,7 @@ export class productlistEntity{
     @Column()
     Amount : number;
 
+    @Column()
+    amount:number;
+
 }
