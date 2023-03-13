@@ -1,4 +1,3 @@
-
 import { IsInt,isNotEmpty,isString,isEmail,Length,Min, IsNotEmpty, IsString, IsEmail, Matches } from "class-validator";
 
 export class petshopperregistration{

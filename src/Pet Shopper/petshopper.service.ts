@@ -7,30 +7,32 @@ import * as bcrypt from 'bcrypt';
 import { PetShopperForm, petshopperregistration,PetshopperBlog, PetshopperProduct, Medicinelist, Foodlist, } from "./petshopperform.dto";
 import { medicinelistEntity } from "./Entity/medicinelist.entity";
 import { FoodlistEntity } from "./Entity/foodlists.entity";
-import { registerSchema } from "class-validator";
-
+import { registerDecorator, registerSchema } from "class-validator";
+import { MailerService } from "@nestjs-modules/mailer/dist";
 
 @Injectable()
 export class PetShopperService {
-  constructor(
+  updateuser: any;
+constructor(
     @InjectRepository(PetshopperEntity)
     private petshopper: Repository<PetshopperEntity>,
+  
     @InjectRepository(PetshopperProductEntity)
     private petshopperproductRepo: Repository<PetshopperProductEntity>,
+
     @InjectRepository(medicinelistEntity)
     private medicinelistRepo: Repository<medicinelistEntity>,
+
     @InjectRepository(FoodlistEntity)
     private foodlistRepo: Repository<FoodlistEntity>,
+    private mailerService: MailerService,
 
   ){}
 
   getproduct(register: any): any {
     throw new Error("Method not implemented.");
   }
-  mailerService: any;
-  updateuser(id: number, name: string, email: string, password: string, phone: number,address:string,district:string): any {
-    throw new Error("Method not implemented.");
-  }
+
   insertImage(adaption: petshopperregistration): any {
     throw new Error("Method not implemented.");
   }
@@ -73,12 +75,7 @@ deleteuser(name:string,id:number):any {
   return this.petshopper.delete(id);
 }
 
-// postproducts(name:string,id:number):any{
-//   const petshopperproduct =new PetshopperProductEntity();
-//   petshopperproduct.name=petshopperproduct.name;
-//   console.log( 'Post products name : '+name + 'and id is '+id);
-//   return this.petshopper.save(petshopperproduct)
-// }
+
 postproduct(ndto:PetshopperProduct):any{
   const petproductlist = new PetshopperProductEntity();
   petproductlist.name=ndto.name;
@@ -114,32 +111,42 @@ postinfo(petshopperdto:PetShopperForm):any{
   return 'Show Info : '+ petshopperdto.name+'and id is'+petshopperdto.id;
 }
 
+async registration(register) {
+  const salt = await bcrypt.genSalt();
+  const hassedpassed = await bcrypt.hash(register.password, salt);
+  register.password= hassedpassed;
+  return this.petshopper.save(register);
+  }
+
+
+async signin(mydto){
+  console.log(mydto.password);
+const mydata= await this.petshopper.findOneBy({email: mydto.email});
+const isMatch= await bcrypt.compare(mydto.password, mydata.password);
+if(isMatch) {
+return 1;
+}
+else {
+  return 0;
+}
+
+}
 async signup(mydto) {
   const salt = await bcrypt.genSalt();
   const hassedpassed = await bcrypt.hash(mydto.password, salt);
   mydto.password= hassedpassed;
   return this.petshopper.save(mydto);
   }
-  
 
 
-//   async getRegistration(rdto : PetShopperForm):Promise<any>
-// try {
 
-//   const raccount= new PetshopperEntity();
-//   raccount.name=register.name;
-//   raccount.email=register.email;
-//   raccount.phone=rdto.phone;
-//   raccount.address=rdto.address;
-//   raccount.password=rdto.password;
-//   raccount.district=rdto.district;
-//   return await this.RRepo.save(raccount);
+  async sendEmail(mydata){
+    return   await this.mailerService.sendMail({
+           to: mydata.email,
+           subject: mydata.subject,
+           text: mydata.text, 
+         });
+   
+   }
 
-// }catch (error){
-//   console.log(error);
-// }
-
-
-}  
-  
-  
+} 

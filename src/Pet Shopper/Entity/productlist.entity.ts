@@ -10,8 +10,8 @@ export class productlistEntity{
     @Column()
     name : string;
 
-    @Column()
-    Amount : number;
+    // @Column()
+    // Amount : number;
 
     @Column()
     amount:number;
